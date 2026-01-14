@@ -1,0 +1,44 @@
+{
+  "sizes": [
+    {
+      "id": "small",
+      "label": "Small (12x18\")",
+      "multiplier": 1,
+      "basePrice": 150
+    },
+    {
+      "id": "medium",
+      "label": "Medium (20x30\")",
+      "multiplier": 1.8,
+      "basePrice": 150
+    },
+    {
+      "id": "large",
+      "label": "Large (24x36\")",
+      "multiplier": 2.5,
+      "basePrice": 150
+    }
+  ],
+  "frames": [
+    {
+      "id": "none",
+      "label": "No Frame",
+      "price": 0
+    },
+    {
+      "id": "black",
+      "label": "Black Wood",
+      "price": 50
+    },
+    {
+      "id": "white",
+      "label": "White Wood",
+      "price": 50
+    },
+    {
+      "id": "oak",
+      "label": "Natural Oak",
+      "price": 70
+    }
+  ]
+}
