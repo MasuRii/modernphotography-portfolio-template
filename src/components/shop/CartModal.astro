@@ -1,0 +1,166 @@
+---
+// Cart Modal Component
+---
+
+<div
+  id="cart-modal-backdrop"
+  class="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-opacity duration-300"
+  aria-hidden="true"
+>
+  <div
+    id="cart-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="cart-modal-title"
+    class="bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-md w-full mx-4 p-6 transform scale-95 transition-transform duration-300"
+    tabindex="-1"
+  >
+    <!-- Success Icon -->
+    <div class="flex justify-center mb-4">
+      <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+        <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <h2
+        id="cart-modal-title"
+        class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+      >
+        Added to Cart!
+      </h2>
+      
+      <!-- Product Details -->
+      <div id="cart-modal-details" class="text-left bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 my-4">
+        <p id="cart-modal-product" class="font-medium text-gray-900 dark:text-white mb-1"></p>
+        <p id="cart-modal-variant" class="text-sm text-gray-600 dark:text-gray-400 mb-2"></p>
+        <p id="cart-modal-price" class="font-bold text-lg text-gray-900 dark:text-white"></p>
+      </div>
+
+      <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+        This is a demo store. No payment will be processed.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button
+          id="cart-modal-continue-btn"
+          class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          Continue Shopping
+        </button>
+        <button
+          id="cart-modal-checkout-btn"
+          class="flex-1 px-4 py-2 bg-primary text-background rounded-md hover:opacity-90 transition-colors font-medium"
+        >
+          View Cart
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { cartModalState, closeCartModal } from '../../store/cart';
+  import { openDemoModal } from '../../store/demo';
+
+  const backdrop = document.getElementById('cart-modal-backdrop');
+  const modal = document.getElementById('cart-modal');
+  const productEl = document.getElementById('cart-modal-product');
+  const variantEl = document.getElementById('cart-modal-variant');
+  const priceEl = document.getElementById('cart-modal-price');
+  const continueBtn = document.getElementById('cart-modal-continue-btn');
+  const checkoutBtn = document.getElementById('cart-modal-checkout-btn');
+
+  let previousActiveElement: HTMLElement | null = null;
+
+  // Subscribe to store changes
+  cartModalState.subscribe((state) => {
+    if (state.isOpen) {
+      openModal(state.product, state.size, state.frame, state.price);
+    } else {
+      closeModal();
+    }
+  });
+
+  function openModal(product: string, size: string, frame: string, price: number) {
+    if (!backdrop || !modal || !productEl || !variantEl || !priceEl) return;
+
+    // Update content
+    productEl.textContent = product;
+    variantEl.textContent = `${size} • ${frame}`;
+    priceEl.textContent = `$${price.toFixed(0)}`;
+
+    // Show modal
+    backdrop.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
+    backdrop.classList.add('opacity-100', 'pointer-events-auto');
+    backdrop.setAttribute('aria-hidden', 'false');
+    
+    // Scale animation
+    modal.classList.remove('scale-95');
+    modal.classList.add('scale-100');
+
+    // Save focus and trap
+    previousActiveElement = document.activeElement as HTMLElement;
+    continueBtn?.focus();
+    
+    // Disable body scroll
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!backdrop || !modal) return;
+
+    // Hide modal
+    backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    backdrop.setAttribute('aria-hidden', 'true');
+
+    // Scale animation
+    modal.classList.remove('scale-100');
+    modal.classList.add('scale-95');
+
+    // Wait for animation to finish
+    setTimeout(() => {
+      if (backdrop.classList.contains('opacity-0')) {
+        backdrop.classList.add('invisible');
+      }
+    }, 300);
+
+    // Restore focus
+    if (previousActiveElement) {
+      previousActiveElement.focus();
+      previousActiveElement = null;
+    }
+
+    // Enable body scroll
+    document.body.style.overflow = '';
+  }
+
+  // Event Listeners
+  continueBtn?.addEventListener('click', () => {
+    closeCartModal();
+  });
+
+  checkoutBtn?.addEventListener('click', () => {
+    closeCartModal();
+    // Open the demo modal for checkout
+    openDemoModal('Shop Checkout', 'This is a demo store. No payment processing is connected, and no goods will be shipped.');
+  });
+
+  backdrop?.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      closeCartModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const state = cartModalState.get();
+    if (!state.isOpen) return;
+
+    if (e.key === 'Escape') {
+      closeCartModal();
+    }
+  });
+</script>

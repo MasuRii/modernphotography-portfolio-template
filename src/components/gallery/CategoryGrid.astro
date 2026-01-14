@@ -40,7 +40,7 @@ const categoryImages = await Promise.all(categories.map(async (cat) => {
     {categoryImages.map((cat, index) => (
       <a 
         href={`/gallery/${cat.id}`} 
-        class="category-card group relative aspect-[4/3] overflow-hidden rounded-sm block bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        class="category-card group relative aspect-[4/3] overflow-hidden rounded-sm block bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <div class="card-content h-full w-full transition-transform duration-200 ease-out will-change-transform">
           {cat.image ? (
@@ -52,7 +52,7 @@ const categoryImages = await Promise.all(categories.map(async (cat) => {
               class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] opacity-0 transition-opacity duration-700 img-fade-in"
             />
           ) : (
-               <div class="h-full w-full flex items-center justify-center bg-neutral-800 text-neutral-400">
+               <div class="h-full w-full flex items-center justify-center bg-surface text-secondary">
                  <span class="sr-only">No image available for {cat.title}</span>
                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 opacity-50">
                   <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />

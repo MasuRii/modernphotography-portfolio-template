@@ -36,7 +36,7 @@ const { images } = Astro.props;
       data-caption={image.caption}
       data-exif={JSON.stringify(image.exif)}
     >
-      <div class="overflow-hidden rounded-sm bg-neutral-800 relative">
+      <div class="overflow-hidden rounded-sm bg-surface relative">
         {image.lqip && (
           <img 
             src={image.lqip}

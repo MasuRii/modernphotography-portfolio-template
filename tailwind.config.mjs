@@ -7,11 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        background: "#0a0a0a",
-        surface: "#171717",
-        border: "#262626",
-        primary: "#ededed",
-        secondary: "#a1a1a1",
+        // These will be overridden by CSS variables for theme support
+        background: "var(--color-background)",
+        surface: "var(--color-surface)",
+        border: "var(--color-border)",
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

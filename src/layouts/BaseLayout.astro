@@ -1,6 +1,7 @@
 ---
 import DemoBanner from '../components/demo/DemoBanner.astro';
 import DemoModal from '../components/demo/DemoModal.astro';
+import CartModal from '../components/shop/CartModal.astro';
 import Lightbox from '../components/lightbox/Lightbox.astro';
 import Header from '../components/navigation/Header.astro';
 import MobileMenu from '../components/navigation/MobileMenu.astro';
@@ -98,7 +99,7 @@ const socialImageURL = new URL(image, Astro.url);
       })();
     </script>
   </head>
-  <body class={`bg-[#0a0a0a] text-gray-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white ${fullScreen ? '' : 'pt-16'}`}>
+  <body class={`bg-background text-primary min-h-screen antialiased selection:bg-indigo-500 selection:text-white ${fullScreen ? '' : 'pt-16'}`}>
     <DemoBanner />
     <Header />
     
@@ -111,6 +112,7 @@ const socialImageURL = new URL(image, Astro.url);
     <HireMeCTA />
     <MobileMenu />
     <DemoModal />
+    <CartModal />
     <Lightbox />
   </body>
 </html>

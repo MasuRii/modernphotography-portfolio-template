@@ -14,6 +14,12 @@
       "message": "In a production site, this link would take you to the photographer's Twitter/X profile."
     },
     {
+      "id": "social-x",
+      "pattern": "x.com",
+      "feature": "X (Twitter) Profile",
+      "message": "In a production site, this link would take you to the photographer's X (formerly Twitter) profile."
+    },
+    {
       "id": "social-linkedin",
       "pattern": "linkedin.com",
       "feature": "LinkedIn Profile",

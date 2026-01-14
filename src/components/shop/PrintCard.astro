@@ -29,7 +29,7 @@ const frameId = `frame-${uniqueId}`;
 ---
 
 <article class="print-card group">
-  <div class="aspect-[4/5] overflow-hidden bg-neutral-900 mb-6 relative">
+  <div class="aspect-[4/5] overflow-hidden bg-surface mb-6 relative">
     <Image 
       src={image}
       alt={title}
@@ -40,24 +40,24 @@ const frameId = `frame-${uniqueId}`;
   
   <div class="space-y-4">
     <div class="flex justify-between items-baseline">
-      <h2 class="text-white font-medium text-lg font-serif">{title}</h2>
-      <span class="text-white font-medium price-display" data-base-price={basePrice}>${basePrice}</span>
+      <h2 class="text-primary font-medium text-lg font-serif">{title}</h2>
+      <span class="text-primary font-medium price-display" data-base-price={basePrice}>${basePrice}</span>
     </div>
-    <p class="text-neutral-400 text-xs uppercase tracking-widest">{category}</p>
+    <p class="text-secondary text-xs uppercase tracking-widest">{category}</p>
 
     <!-- Selection UI -->
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label for={sizeId} class="block text-xs text-neutral-400 mb-1">Size</label>
-        <select id={sizeId} class="size-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+        <label for={sizeId} class="block text-xs text-secondary mb-1">Size</label>
+        <select id={sizeId} class="size-select w-full bg-surface border border-border text-primary text-sm rounded px-2 py-2 focus:outline-none focus:border-primary transition-colors">
           {sizes.map((s, i) => (
             <option value={s.multiplier} selected={i === 0}>{s.label}</option>
           ))}
         </select>
       </div>
       <div>
-        <label for={frameId} class="block text-xs text-neutral-400 mb-1">Frame</label>
-        <select id={frameId} class="frame-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+        <label for={frameId} class="block text-xs text-secondary mb-1">Frame</label>
+        <select id={frameId} class="frame-select w-full bg-surface border border-border text-primary text-sm rounded px-2 py-2 focus:outline-none focus:border-primary transition-colors">
           {frames.map((f, i) => (
             <option value={f.price} selected={i === 0}>{f.label}</option>
           ))}
@@ -65,7 +65,7 @@ const frameId = `frame-${uniqueId}`;
       </div>
     </div>
 
-    <button class="add-to-cart-btn w-full bg-white text-black font-medium py-3 rounded hover:bg-neutral-200 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-black">
+    <button class="add-to-cart-btn w-full bg-primary text-background font-medium py-3 rounded hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
       Add to Cart
     </button>
   </div>

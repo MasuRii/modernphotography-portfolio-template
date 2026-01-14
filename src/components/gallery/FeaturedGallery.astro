@@ -53,13 +53,13 @@ const getResolvedImage = (srcPath: string) => {
 
 ---
 
-<section class="py-20 px-4 md:px-8 bg-neutral-900 text-white" aria-labelledby="featured-work-heading">
+<section class="py-20 px-4 md:px-8 bg-surface text-primary transition-colors duration-300" aria-labelledby="featured-work-heading">
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-col items-center mb-12 text-center">
       <h2 id="featured-work-heading" class="text-3xl md:text-4xl font-serif tracking-wide mb-4">
         Featured Work
       </h2>
-      <div class="w-16 h-px bg-white/30"></div>
+      <div class="w-16 h-px bg-border"></div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[300px]">
@@ -72,7 +72,7 @@ const getResolvedImage = (srcPath: string) => {
         return (
           <div
             class:list={[
-              "group relative overflow-hidden rounded-sm bg-neutral-800 cursor-pointer featured-card",
+              "group relative overflow-hidden rounded-sm bg-surface cursor-pointer featured-card",
               isLarge ? "md:col-span-2 md:row-span-2" : "col-span-1 row-span-1"
             ]}
             data-index={index}

@@ -6,20 +6,20 @@ import DemoLink from '../demo/DemoLink.astro';
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-[#0a0a0a] border-t border-neutral-800 text-neutral-400 py-16 px-6">
+<footer class="bg-background border-t border-border text-secondary py-16 px-6 transition-colors duration-300">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
     
     <!-- Brand / Copyright -->
     <div class="space-y-4 md:text-left text-center">
-      <a href="/" class="text-xl font-serif font-bold text-white tracking-tighter">MASURII</a>
+      <a href="/" class="text-xl font-serif font-bold text-primary tracking-tighter">MASURII</a>
       <div class="text-sm font-light space-y-1">
         <p>&copy; {year} Elena Vashchenko.</p>
         <p>All rights reserved.</p>
       </div>
       {branding.showAttribution && (
-        <p class="text-xs text-neutral-400 pt-4">
-          Built with <a href={branding.repoUrl} target="_blank" rel="noopener noreferrer" class="hover:text-neutral-300 transition-colors">{branding.templateName}</a><br/>
-          by <a href={branding.authorUrl} target="_blank" rel="noopener noreferrer" class="hover:text-neutral-300 transition-colors">{branding.author}</a>
+        <p class="text-xs text-secondary pt-4">
+          Built with <a href={branding.repoUrl} target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">{branding.templateName}</a><br/>
+          by <a href={branding.authorUrl} target="_blank" rel="noopener noreferrer" class="hover:text-primary transition-colors">{branding.author}</a>
         </p>
       )}
     </div>
@@ -30,7 +30,7 @@ const year = new Date().getFullYear();
         <DemoLink 
           href={link.url}
           aria-label={link.label}
-          class="hover:text-white transition-colors"
+          class="hover:text-primary transition-colors"
         >
           <span class="sr-only">{link.platform}</span>
           {link.icon === 'instagram' && (
@@ -54,8 +54,8 @@ const year = new Date().getFullYear();
 
     <!-- Newsletter -->
     <div class="md:text-right">
-      <h3 class="text-white font-medium mb-4">Stay Updated</h3>
-      <p class="text-xs text-neutral-400 mb-4 max-w-xs md:ml-auto">
+      <h3 class="text-primary font-medium mb-4">Stay Updated</h3>
+      <p class="text-xs text-secondary mb-4 max-w-xs md:ml-auto">
         Join our newsletter for new releases and exhibition announcements.
       </p>
       <form class="newsletter-form flex gap-2 justify-center md:justify-end">
@@ -63,9 +63,9 @@ const year = new Date().getFullYear();
           type="email" 
           placeholder="Email address" 
           required
-          class="bg-neutral-900 border border-neutral-800 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-white transition-colors w-full max-w-[200px]"
+          class="bg-surface border border-border rounded px-4 py-2 text-sm text-primary focus:outline-none focus:border-primary transition-colors w-full max-w-[200px]"
         />
-        <button type="submit" class="bg-white text-black px-4 py-2 rounded text-sm font-medium hover:bg-neutral-200 transition-colors">
+        <button type="submit" class="bg-primary text-background px-4 py-2 rounded text-sm font-medium hover:opacity-90 transition-all">
           Join
         </button>
       </form>

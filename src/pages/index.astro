@@ -1,10 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroSlider from '../components/hero/HeroSlider.astro';
-import DemoLink from '../components/demo/DemoLink.astro';
-import DemoButton from '../components/demo/DemoButton.astro';
-import DemoSuccessMessage from '../components/demo/DemoSuccessMessage.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
 import CategoryGrid from '../components/gallery/CategoryGrid.astro';
 import FeaturedGallery from '../components/gallery/FeaturedGallery.astro';
 import { getHeroSlides } from '../utils/hero';
@@ -18,57 +14,4 @@ const slides = await getHeroSlides();
   <CategoryGrid />
 
   <FeaturedGallery />
-  
-  <div class="container mx-auto px-4 py-8 mt-16">
-    <h1 class="text-4xl font-serif mb-8">Astro Setup Complete</h1>
-    
-    <!-- Demo Mode Test Elements -->
-    <div class="p-6 border border-white/10 rounded-lg bg-neutral-900/50 mb-8">
-      <h2 class="text-xl font-bold mb-4">Demo System Tests</h2>
-      <nav class="flex items-center gap-4 mb-4">
-        <DemoLink href="https://instagram.com/masurii">Instagram</DemoLink>
-        <a href="/about" id="internal-link" class="text-primary hover:underline">About</a>
-      </nav>
-      
-      <div class="flex gap-4 items-center mb-4">
-        <DemoButton feature="Checkout" class="px-4 py-2 bg-white text-black font-bold">Checkout</DemoButton>
-        <ThemeToggle />
-      </div>
-
-      <form id="newsletter-form" class="mt-4 flex gap-2">
-        <input type="email" required placeholder="Email" class="px-4 py-2 bg-neutral-800 border border-neutral-700 text-white" />
-        <button type="submit" class="px-4 py-2 bg-white text-black font-bold">Subscribe</button>
-      </form>
-      <DemoSuccessMessage id="newsletter-success" class="mt-4" />
-    </div>
-  </div>
-
-  <script>
-    import { handleDemoFormSubmit } from '../utils/demo-form-handler';
-
-    const form = document.getElementById('newsletter-form') as HTMLFormElement;
-    const successMsg = document.getElementById('newsletter-success');
-
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        const handled = await handleDemoFormSubmit(e, 
-          (loading) => {
-            const btn = form.querySelector('button');
-            if (btn) btn.disabled = loading;
-          },
-          (msg) => {
-            if (successMsg) {
-               successMsg.classList.remove('hidden');
-               successMsg.querySelector('p')!.textContent = msg;
-            }
-          }
-        );
-        
-        if (!handled) {
-          // Real submission logic would go here
-          console.log('Real submission');
-        }
-      });
-    }
-  </script>
 </BaseLayout>

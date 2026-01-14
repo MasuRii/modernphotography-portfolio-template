@@ -10,8 +10,25 @@ export interface CartItem {
   quantity: number;
 }
 
+export interface CartModalState {
+  isOpen: boolean;
+  product: string;
+  size: string;
+  frame: string;
+  price: number;
+}
+
 export const isCartOpen = atom(false); // For Cart drawer visibility
 export const cartItems = map<Record<string, CartItem>>({});
+
+// Cart modal state
+export const cartModalState = map<CartModalState>({
+  isOpen: false,
+  product: "",
+  size: "",
+  frame: "",
+  price: 0,
+});
 
 export const cartCount = computed(cartItems, (items) => {
   return Object.values(items).reduce((acc, item) => acc + item.quantity, 0);
@@ -38,8 +55,25 @@ export function addCartItem(item: Omit<CartItem, "quantity" | "id">) {
     });
   }
 
-  // For now, just a placeholder alert until we have a real cart UI
-  alert(`Added to cart: ${item.title} - ${item.size} / ${item.frame}`);
+  // Open cart modal with product details
+  openCartModal(item.title, item.size, item.frame, item.price);
+}
+
+export function openCartModal(product: string, size: string, frame: string, price: number) {
+  cartModalState.set({
+    isOpen: true,
+    product,
+    size,
+    frame,
+    price,
+  });
+}
+
+export function closeCartModal() {
+  cartModalState.set({
+    ...cartModalState.get(),
+    isOpen: false,
+  });
 }
 
 export function removeCartItem(id: string) {

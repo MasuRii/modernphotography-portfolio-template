@@ -1,37 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
-import galleryImages from '../data/gallery-images.json';
+import shopPrints from '../data/shop-prints.json';
 import PrintCard from '../components/shop/PrintCard.astro';
 
 const title = "Print Shop | Modern Photography Portfolio";
 const description = "Limited edition fine art prints available for purchase.";
 
-// Get image imports
-const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/**/*.{jpeg,jpg,png,gif}');
+// Get image imports for shop images
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/shop/*.{jpeg,jpg,png,gif}');
 
-// Filter and resolve images
+// Resolve images
 const printImages = await Promise.all(
-  galleryImages
-    .filter(img => img.printAvailable)
-    .map(async (img) => {
-      const key = `/src/assets${img.src}`;
-      const imageLoader = images[key];
-      const imageData = imageLoader ? (await imageLoader()).default : null;
-      return { ...img, imageData };
-    })
+  shopPrints.map(async (item) => {
+    const key = `/src/assets${item.src}`;
+    const imageLoader = images[key];
+    const imageData = imageLoader ? (await imageLoader()).default : null;
+    return { ...item, imageData };
+  })
 );
 ---
 
 <BaseLayout title={title} description={description}>
-  <section class="min-h-screen pt-32 pb-20 px-6 md:px-12 lg:px-20 bg-[#0a0a0a] text-neutral-300">
+  <section class="min-h-screen pt-32 pb-20 px-6 md:px-12 lg:px-20 bg-background text-secondary transition-colors duration-300">
     <div class="max-w-7xl mx-auto mb-16">
-      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-6 tracking-tight">
+      <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">
         Print Shop
       </h1>
 
-      <div class="inline-block bg-amber-900/30 border border-amber-800/50 rounded-lg px-4 py-2 mb-6">
-        <p class="text-amber-200 text-sm font-medium flex items-center gap-2">
+      <div class="inline-block bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-800/50 rounded-lg px-4 py-2 mb-6">
+        <p class="text-amber-800 dark:text-amber-200 text-sm font-medium flex items-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
           </svg>
@@ -39,7 +37,7 @@ const printImages = await Promise.all(
         </p>
       </div>
 
-      <p class="text-lg font-light leading-relaxed text-neutral-400 max-w-2xl">
+      <p class="text-lg font-light leading-relaxed text-secondary max-w-2xl">
         Select works available as museum-quality giclée prints. Each print is produced on archival cotton rag paper, signed, and numbered.
       </p>
     </div>
@@ -51,6 +49,7 @@ const printImages = await Promise.all(
             image={image.imageData}
             title={image.title}
             category={image.category}
+            basePrice={image.basePrice}
           />
         ) : null
       ))}
