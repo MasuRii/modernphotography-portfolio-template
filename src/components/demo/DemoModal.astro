@@ -113,6 +113,37 @@ import { modalState, closeDemoModal } from '../../store/demo';
     document.body.style.overflow = '';
   }
 
+  function getFocusableElements(): HTMLElement[] {
+    if (!modal) return [];
+    return Array.from(
+      modal.querySelectorAll(
+        'a[href], button:not([disabled]), textarea, input, select'
+      )
+    ) as HTMLElement[];
+  }
+
+  function handleTabKey(e: KeyboardEvent) {
+    const focusableElements = getFocusableElements();
+    if (focusableElements.length === 0) return;
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    if (!firstElement || !lastElement) return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
+    } else {
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  }
+
   // Event Listeners
   closeBtn?.addEventListener('click', () => {
     closeDemoModal();
@@ -126,8 +157,12 @@ import { modalState, closeDemoModal } from '../../store/demo';
 
   document.addEventListener('keydown', (e) => {
     const state = modalState.get();
-    if (state.isOpen && e.key === 'Escape') {
+    if (!state.isOpen) return;
+
+    if (e.key === 'Escape') {
       closeDemoModal();
+    } else if (e.key === 'Tab') {
+      handleTabKey(e);
     }
   });
 </script>
