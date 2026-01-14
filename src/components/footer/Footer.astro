@@ -1,0 +1,113 @@
+---
+import socialLinks from '../../data/social-links.json';
+import branding from '../../data/branding.json';
+import DemoLink from '../demo/DemoLink.astro';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-[#0a0a0a] border-t border-neutral-800 text-neutral-400 py-16 px-6">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-start">
+    
+    <!-- Brand / Copyright -->
+    <div class="space-y-4 md:text-left text-center">
+      <a href="/" class="text-xl font-serif font-bold text-white tracking-tighter">MASURII</a>
+      <div class="text-sm font-light space-y-1">
+        <p>&copy; {year} Elena Vashchenko.</p>
+        <p>All rights reserved.</p>
+      </div>
+      {branding.showAttribution && (
+        <p class="text-xs text-neutral-600 pt-4">
+          Built with <a href={branding.repoUrl} target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors">{branding.templateName}</a><br/>
+          by <a href={branding.authorUrl} target="_blank" rel="noopener noreferrer" class="hover:text-neutral-400 transition-colors">{branding.author}</a>
+        </p>
+      )}
+    </div>
+
+    <!-- Social Links -->
+    <div class="flex justify-center gap-6 md:pt-2">
+      {socialLinks.map(link => (
+        <DemoLink 
+          href={link.url}
+          aria-label={link.label}
+          class="hover:text-white transition-colors"
+        >
+          <span class="sr-only">{link.platform}</span>
+          {link.icon === 'instagram' && (
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          )}
+          {link.icon === 'twitter' && (
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          )}
+          {link.icon === 'linkedin' && (
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          )}
+          {link.icon === 'behance' && (
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 7h-7v-2h7v2zm1.726 10c-.05.579-.275 1.076-.676 1.49-.401.415-.967.623-1.697.623-1.146 0-1.921-.579-2.324-1.739h6.107c.033-.124.05-.265.05-.423 0-1.296-.289-2.316-.867-3.06-.578-.744-1.465-1.116-2.66-1.116-1.229 0-2.19.387-2.884 1.161-.694.774-1.041 1.833-1.041 3.178 0 1.393.366 2.479 1.097 3.257.731.778 1.815 1.167 3.252 1.167 1.097 0 1.953-.257 2.569-.771.616-.514.993-1.14 1.131-1.879l-2.059.111zm-4.707-1.954c.058-.696.289-1.201.694-1.516.405-.315.932-.472 1.58-.472.632 0 1.137.152 1.515.456.378.303.585.793.621 1.469h-4.41zm-6.324-.973c.712 0 1.272-.218 1.68-.654.409-.436.613-1.033.613-1.792v-.235c0-.687-.152-1.232-.456-1.637-.304-.404-.764-.606-1.379-.606-.665 0-1.157.218-1.477.654-.319.436-.479 1.059-.479 1.87v.152c0 .81.164 1.418.492 1.842.329.424.832.637 1.509.637v-.231zm-.324 2.602c.762 0 1.439-.241 2.032-.723.593-.482.997-1.196 1.212-2.141h2.234v5.906h-2.314v-1.991c-.266.729-.687 1.294-1.264 1.695-.577.401-1.306.602-2.188.602-1.248 0-2.197-.432-2.847-1.296-.65-.864-.975-2.073-.975-3.628 0-1.621.341-2.867 1.023-3.738.682-.871 1.657-1.307 2.925-1.307.729 0 1.348.167 1.856.5.508.333.873.784 1.094 1.352v-2.28h2.314v-4.07h-2.314v1.644c-.218-.59-.604-1.052-1.157-1.385-.553-.333-1.229-.5-2.029-.5-1.268 0-2.222.42-2.861 1.26-.639.84-1.037 2.062-1.194 3.666h2.292c.134-1.63.894-2.445 2.28-2.445.694 0 1.208.192 1.542.576.333.384.5 1.002.5 1.854v.176c0 .864-.176 1.493-.528 1.887-.352.394-.861.59-1.528.59-.648 0-1.127-.183-1.437-.549-.31-.366-.465-.919-.465-1.659v-.22h-2.292c.036 1.572.405 2.78 1.106 3.626.702.846 1.66 1.269 2.875 1.269z"/></svg>
+          )}
+          {link.icon === '500px' && (
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.2 14.8c-.5.6-1.1.9-2 .9-.9 0-1.5-.4-2-.9-.4-.6-.7-1.4-.7-2.3s.2-1.8.7-2.3c.5-.5 1.2-.8 2-.8s1.5.3 2 .9c.5.6.7 1.4.7 2.3s-.2 1.7-.7 2.2zM15.9 11c-.2-.9-.6-1.7-1.2-2.3C14 8 13.1 7.6 12.2 7.6c-1 0-1.9.3-2.6 1-.6.7-1 1.5-1.1 2.4H6c.1-1.9 1-3.5 2.4-4.7C9.5 5.3 10.9 4.9 12.3 5c1.4-.1 2.8.4 3.9 1.3 1.4 1.2 2.3 2.8 2.4 4.7h-2.7zm-2.9 6.8c-1.3 0-2.5-.5-3.4-1.3-1.4-1.2-2.3-2.8-2.4-4.7h2.5c.2.9.6 1.7 1.2 2.3.7.7 1.5 1 2.4 1 .9 0 1.7-.3 2.4-1 .6-.6 1-1.4 1.2-2.3h2.6c-.1 1.9-1 3.5-2.4 4.7-.9.8-2.2 1.3-3.6 1.3h-.5zm-3.6 3.1c-1.6.4-3.3.4-4.9.1-.8-.1-1.3-.8-1.2-1.5.1-.7.7-1.2 1.5-1.1 1.3.2 2.7.2 4 .1.7-.1 1.4.4 1.5 1.2.1.6-.4 1.3-1.1 1.4.1 0 .1 0 .2-.2zm10.7-1.3c-.1.7-.8 1.2-1.5 1.1-1.3-.2-2.7-.2-4-.1-.7.1-1.4-.4-1.5-1.2-.1-.7.4-1.4 1.1-1.5.1 0 .2 0 .2.2 1.6-.4 3.3-.4 4.9-.1.8.1 1.3.8 1.2 1.5 0 .1 0 .1-.4.1zM12.2 2.6C6.9 2.6 2.6 6.9 2.6 12.2s4.3 9.6 9.6 9.6 9.6-4.3 9.6-9.6-4.3-9.6-9.6-9.6z"/></svg>
+          )}
+        </DemoLink>
+      ))}
+    </div>
+
+    <!-- Newsletter -->
+    <div class="md:text-right">
+      <h3 class="text-white font-medium mb-4">Stay Updated</h3>
+      <p class="text-xs text-neutral-500 mb-4 max-w-xs md:ml-auto">
+        Join our newsletter for new releases and exhibition announcements.
+      </p>
+      <form class="newsletter-form flex gap-2 justify-center md:justify-end">
+        <input 
+          type="email" 
+          placeholder="Email address" 
+          required
+          class="bg-neutral-900 border border-neutral-800 rounded px-4 py-2 text-sm text-white focus:outline-none focus:border-white transition-colors w-full max-w-[200px]"
+        />
+        <button type="submit" class="bg-white text-black px-4 py-2 rounded text-sm font-medium hover:bg-neutral-200 transition-colors">
+          Join
+        </button>
+      </form>
+      <div class="newsletter-status text-xs mt-2 h-4 text-green-500"></div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  import { handleDemoFormSubmit } from '../../utils/demo-form-handler';
+
+  const forms = document.querySelectorAll('.newsletter-form');
+
+  forms.forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      const formEl = e.target as HTMLFormElement;
+      const btn = formEl.querySelector('button');
+      const status = formEl.nextElementSibling as HTMLElement;
+
+      const handled = await handleDemoFormSubmit(
+        e,
+        (loading) => {
+          if (btn) {
+            btn.disabled = loading;
+            if (loading) {
+                if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent || '';
+                btn.textContent = '...';
+            } else {
+                btn.textContent = btn.dataset.originalText || 'Join';
+            }
+          }
+        },
+        (message) => {
+          if (status) {
+            status.textContent = message;
+            setTimeout(() => {
+                status.textContent = '';
+            }, 5000);
+          }
+        }
+      );
+    });
+  });
+</script>
