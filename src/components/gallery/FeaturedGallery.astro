@@ -72,9 +72,14 @@ const getResolvedImage = (srcPath: string) => {
         return (
           <div
             class:list={[
-              "group relative overflow-hidden rounded-sm bg-neutral-800",
+              "group relative overflow-hidden rounded-sm bg-neutral-800 cursor-pointer featured-card",
               isLarge ? "md:col-span-2 md:row-span-2" : "col-span-1 row-span-1"
             ]}
+            data-index={index}
+            data-src={resolvedImage.src}
+            data-title={image.title}
+            data-category={image.category}
+            data-caption={image.caption}
           >
             <Image
               src={resolvedImage}
@@ -102,3 +107,27 @@ const getResolvedImage = (srcPath: string) => {
     </div>
   </div>
 </section>
+
+<script>
+  import { openLightbox } from '../../store/lightbox';
+  import type { LightboxImage } from '../../store/lightbox';
+
+  const cards = document.querySelectorAll('.featured-card');
+  const images: LightboxImage[] = Array.from(cards).map((card) => {
+    const el = card as HTMLElement;
+    return {
+      id: String(el.dataset.index),
+      src: el.dataset.src || '',
+      title: el.dataset.title || '',
+      category: el.dataset.category || '',
+      caption: el.dataset.caption || '',
+    };
+  });
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      const index = Number((card as HTMLElement).dataset.index);
+      openLightbox(images, index);
+    });
+  });
+</script>

@@ -1,6 +1,7 @@
 ---
 import DemoBanner from '../components/demo/DemoBanner.astro';
 import DemoModal from '../components/demo/DemoModal.astro';
+import Lightbox from '../components/lightbox/Lightbox.astro';
 import Header from '../components/navigation/Header.astro';
 import MobileMenu from '../components/navigation/MobileMenu.astro';
 import HireMeCTA from '../components/navigation/HireMeCTA.astro';
@@ -98,5 +99,6 @@ const socialImageURL = new URL(image, Astro.url);
     <HireMeCTA />
     <MobileMenu />
     <DemoModal />
+    <Lightbox />
   </body>
 </html>
