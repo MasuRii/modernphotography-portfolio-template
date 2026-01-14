@@ -23,7 +23,7 @@ async function processImage(filename: string) {
   let metadata;
   try {
     metadata = await image.metadata();
-  } catch (err) {
+  } catch (_err) {
     console.warn(`  Could not read metadata for ${filename}, skipping.`);
     return;
   }

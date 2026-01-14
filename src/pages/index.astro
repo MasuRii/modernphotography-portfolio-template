@@ -6,6 +6,7 @@ import DemoButton from '../components/demo/DemoButton.astro';
 import DemoSuccessMessage from '../components/demo/DemoSuccessMessage.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import CategoryGrid from '../components/gallery/CategoryGrid.astro';
+import FeaturedGallery from '../components/gallery/FeaturedGallery.astro';
 import { getHeroSlides } from '../utils/hero';
 
 const slides = await getHeroSlides();
@@ -15,6 +16,8 @@ const slides = await getHeroSlides();
   <HeroSlider slides={slides} />
   
   <CategoryGrid />
+
+  <FeaturedGallery />
   
   <div class="container mx-auto px-4 py-8 mt-16">
     <h1 class="text-4xl font-serif mb-8">Astro Setup Complete</h1>

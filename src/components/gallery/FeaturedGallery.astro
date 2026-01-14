@@ -1,0 +1,104 @@
+---
+import { Image } from 'astro:assets';
+import galleryImages from '../../data/gallery-images.json';
+import type { ImageMetadata } from 'astro';
+
+interface GalleryImage {
+  id: string;
+  src: string;
+  category: string;
+  title: string;
+  caption: string;
+  featured: boolean;
+  printAvailable: boolean;
+  exif?: {
+    camera: string;
+    lens: string;
+    iso: number;
+    aperture: string;
+    shutter: string;
+  };
+}
+
+// Filter featured images and limit to a reasonable number (e.g., 8-10)
+const featuredImages = (galleryImages as GalleryImage[])
+  .filter((img) => img.featured)
+  .slice(0, 8);
+
+// Helper to map string src to ImageMetadata (in a real app, this would be dynamic or import.meta.glob)
+// Since we have a build process that puts images in src/assets/images/gallery/, we need to resolve them.
+// However, the JSON has "/images/..." which might be public path.
+// If we want to use Astro <Image /> optimization, we need to import the files.
+// For now, I'll assume we can use the `src` string if it's in public, BUT `fetch-images.ts` saved to `src/assets/images/gallery`.
+// So we should use import.meta.glob to get the actual image objects.
+
+const imagesGlob = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/**/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+});
+
+const getResolvedImage = (srcPath: string) => {
+    // The JSON src is like "/images/gallery/category/id.jpg"
+    // We try to match the filename in the glob results.
+    const filename = srcPath.split('/').pop();
+    if (!filename) return undefined;
+
+    // Find a key in imagesGlob that ends with the filename
+    const foundKey = Object.keys(imagesGlob).find(key => key.endsWith(filename));
+    
+    if (foundKey && imagesGlob[foundKey]) {
+        return imagesGlob[foundKey].default;
+    }
+    return undefined;
+};
+
+---
+
+<section class="py-20 px-4 md:px-8 bg-neutral-900 text-white" aria-labelledby="featured-work-heading">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col items-center mb-12 text-center">
+      <h2 id="featured-work-heading" class="text-3xl md:text-4xl font-serif tracking-wide mb-4">
+        Featured Work
+      </h2>
+      <div class="w-16 h-px bg-white/30"></div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[300px]">
+      {featuredImages.map((image, index) => {
+        const resolvedImage = getResolvedImage(image.src);
+        const isLarge = index % 5 === 0; // Simple pattern to make some images span
+
+        if (!resolvedImage) return null;
+
+        return (
+          <div
+            class:list={[
+              "group relative overflow-hidden rounded-sm bg-neutral-800",
+              isLarge ? "md:col-span-2 md:row-span-2" : "col-span-1 row-span-1"
+            ]}
+          >
+            <Image
+              src={resolvedImage}
+              alt={image.title}
+              width={isLarge ? 1200 : 600}
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            
+            {/* Overlay */}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+              <span class="text-xs font-medium uppercase tracking-wider text-white/70 mb-1">
+                {image.category}
+              </span>
+              <h3 class="text-xl font-serif text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                {image.title}
+              </h3>
+            </div>
+            
+             {/* Accessibility focus ring fallback is handled by global styles, 
+                 but we should ensure this is clickable/focusable if it opens a lightbox later. 
+                 For now, it's just a display. */}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

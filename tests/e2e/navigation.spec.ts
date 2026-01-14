@@ -38,7 +38,7 @@ test.describe('Navigation', () => {
     await expect(overlay).toHaveClass(/translate-x-full/);
   });
 
-  test('Header hides on scroll down and shows on scroll up', async ({ page, isMobile }) => {
+  test('Header hides on scroll down and shows on scroll up', async ({ page, isMobile: _isMobile }) => {
     // Determine height of page to allow scrolling
     // We might need to add content if the page is empty
     await page.evaluate(() => {
