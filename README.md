@@ -18,4 +18,10 @@ To build for production:
 bun run build
 ```
 
+To lint the codebase:
+
+```bash
+bun run lint
+```
+
 This project was created using `bun init` in bun v1.3.5. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
