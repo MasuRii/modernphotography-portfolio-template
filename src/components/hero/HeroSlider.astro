@@ -3,6 +3,7 @@ import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import galleryImages from '../../data/gallery-images.json';
 import lqipData from '../../data/lqip-data.json';
+import photographer from '../../data/photographer.json';
 
 // Get all images from assets
 const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/*.{jpeg,jpg,png,gif}');
@@ -59,15 +60,27 @@ const validSlides = slides.filter((s): s is NonNullable<typeof s> => s !== null)
       />
 
       <div class="absolute bottom-24 left-8 md:left-24 z-20 text-white max-w-2xl">
-        <h2 class="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-2 opacity-0 translate-y-4 animate-slide-up" style="animation-delay: 300ms;">
+        <h2 class="text-3xl md:text-5xl font-serif font-bold tracking-tight mb-2 opacity-0 translate-y-4 animate-slide-up drop-shadow-md" style="animation-delay: 300ms;">
           {slide.title}
         </h2>
-        <p class="text-lg md:text-xl font-sans font-light tracking-wide opacity-0 translate-y-4 animate-slide-up" style="animation-delay: 500ms;">
+        <p class="text-base md:text-lg font-sans font-light tracking-wide opacity-0 translate-y-4 animate-slide-up drop-shadow-md" style="animation-delay: 500ms;">
           {slide.caption}
         </p>
       </div>
     </div>
   ))}
+
+  <!-- Photographer Branding Overlay -->
+  <div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none mix-blend-overlay">
+      <div class="text-center text-white/90">
+         <h1 class="text-6xl md:text-9xl font-serif font-bold tracking-tighter drop-shadow-xl opacity-0 animate-fade-in-slow">
+           {photographer.name.split(' ')[0]}<span class="font-light">{photographer.name.split(' ')[1]}</span>
+         </h1>
+         <p class="text-xl md:text-2xl font-sans font-light tracking-[0.2em] uppercase mt-4 drop-shadow-lg opacity-0 animate-fade-in-slow delay-500">
+           {photographer.title}
+         </p>
+      </div>
+  </div>
 
   <!-- Navigation -->
   <button class="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-4 text-white/50 hover:text-white transition-colors cursor-pointer" id="prev-slide" aria-label="Previous Slide">
@@ -111,12 +124,21 @@ const validSlides = slides.filter((s): s is NonNullable<typeof s> => s !== null)
   .animate-slide-up {
     animation: slide-up 0.8s ease-out forwards;
   }
+  
+  .animate-fade-in-slow {
+    animation: fade-in 1.5s ease-out forwards;
+  }
 
   @keyframes slide-up {
     to {
       opacity: 1;
       transform: translateY(0);
     }
+  }
+  
+  @keyframes fade-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
   }
 </style>
 
