@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+export interface GalleryImage {
+  id: string;
+  title: string;
+  category: string;
+  src: ImageMetadata;
+  caption?: string;
+}
+
+interface Props {
+  images: GalleryImage[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+  {images.map((image, index) => (
+    <div 
+      class="break-inside-avoid relative group cursor-pointer masonry-item mb-8"
+      data-index={index}
+      data-src={image.src.src}
+      data-title={image.title}
+      data-category={image.category}
+      data-caption={image.caption}
+    >
+      <div class="overflow-hidden rounded-sm bg-neutral-800">
+        <Image
+          src={image.src}
+          alt={image.title}
+          width={800}
+          class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+        />
+      </div>
+      
+      {/* Overlay */}
+      <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+         <h3 class="text-xl font-serif text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+          {image.title}
+        </h3>
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  import { openLightbox } from '../../store/lightbox';
+  import type { LightboxImage } from '../../store/lightbox';
+
+  // We need to target only the items within this specific grid instance to support multiple grids if needed
+  // But for now, simple querySelectorAll is fine as long as we map correctly.
+  // Actually, since Astro scripts run once per page load (mostly), we need to be careful with view transitions if we add them later.
+  // For now, standard script behavior.
+
+  const items = document.querySelectorAll('.masonry-item');
+  const images: LightboxImage[] = Array.from(items).map((item) => {
+    const el = item as HTMLElement;
+    return {
+      id: String(el.dataset.index),
+      src: el.dataset.src || '',
+      title: el.dataset.title || '',
+      category: el.dataset.category || '',
+      caption: el.dataset.caption || '',
+    };
+  });
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      const index = Number((item as HTMLElement).dataset.index);
+      openLightbox(images, index);
+    });
+  });
+</script>

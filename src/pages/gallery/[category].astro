@@ -1,7 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { Image } from 'astro:assets';
 import galleryImages from '../../data/gallery-images.json';
+import MasonryGrid from '../../components/gallery/MasonryGrid.astro';
+import type { GalleryImage } from '../../components/gallery/MasonryGrid.astro';
 import type { ImageMetadata } from 'astro';
 
 export async function getStaticPaths() {
@@ -34,6 +35,20 @@ const getResolvedImage = (srcPath: string) => {
   const foundKey = Object.keys(imagesGlob).find(key => key.endsWith(filename));
   return foundKey && imagesGlob[foundKey] ? imagesGlob[foundKey].default : undefined;
 };
+
+const masonryImages = categoryImages
+  .map((img) => {
+    const resolved = getResolvedImage(img.src);
+    if (!resolved) return null;
+    return {
+      id: img.id,
+      title: img.title,
+      category: img.category,
+      caption: img.caption,
+      src: resolved,
+    };
+  })
+  .filter((img) => img !== null) as GalleryImage[];
 ---
 
 <BaseLayout title={`${categoryTitle} Portfolio`} description={`View my ${category} photography portfolio.`}>
@@ -50,42 +65,9 @@ const getResolvedImage = (srcPath: string) => {
         </p>
       </div>
 
-      {/* Grid Layout (Placeholder for Masonry) */}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {categoryImages.map((image, index) => {
-          const resolvedImage = getResolvedImage(image.src);
-          if (!resolvedImage) return null;
-
-          return (
-            <div 
-              class="group relative mb-8 break-inside-avoid cursor-pointer gallery-item"
-              data-index={index}
-              data-src={resolvedImage.src}
-              data-title={image.title}
-              data-category={image.category}
-              data-caption={image.caption}
-            >
-              <div class="overflow-hidden rounded-sm bg-neutral-800">
-                <Image
-                  src={resolvedImage}
-                  alt={image.title}
-                  width={800}
-                  class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              
-              {/* Overlay */}
-              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                 <h3 class="text-xl font-serif text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                  {image.title}
-                </h3>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <MasonryGrid images={masonryImages} />
       
-      {categoryImages.length === 0 && (
+      {masonryImages.length === 0 && (
         <div class="text-center py-20 text-neutral-500">
           <p>No images found in this category yet.</p>
         </div>
@@ -93,27 +75,3 @@ const getResolvedImage = (srcPath: string) => {
     </div>
   </div>
 </BaseLayout>
-
-<script>
-  import { openLightbox } from '../../store/lightbox';
-  import type { LightboxImage } from '../../store/lightbox';
-
-  const items = document.querySelectorAll('.gallery-item');
-  const images: LightboxImage[] = Array.from(items).map((item) => {
-    const el = item as HTMLElement;
-    return {
-      id: String(el.dataset.index),
-      src: el.dataset.src || '',
-      title: el.dataset.title || '',
-      category: el.dataset.category || '',
-      caption: el.dataset.caption || '',
-    };
-  });
-
-  items.forEach((item) => {
-    item.addEventListener('click', () => {
-      const index = Number((item as HTMLElement).dataset.index);
-      openLightbox(images, index);
-    });
-  });
-</script>
