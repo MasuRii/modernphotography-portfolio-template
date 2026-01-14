@@ -1,0 +1,221 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import galleryImages from '../../data/gallery-images.json';
+
+// Get all images from assets
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/*.{jpeg,jpg,png,gif}');
+
+// Filter featured images (limit to 5 for slider performance)
+const featuredItems = galleryImages.filter(item => item.featured).slice(0, 5);
+
+// Resolve images
+const slides = await Promise.all(featuredItems.map(async (item) => {
+  const imagePath = `/src/assets/images/gallery/${item.id}.jpg`;
+  const imageImport = images[imagePath];
+  if (!imageImport) {
+      // Fallback for development if specific image missing, try generic placeholder if available
+      // or just log warning and skip
+      console.warn(`Image not found: ${imagePath}`);
+      return null;
+  }
+  const img = await imageImport();
+  return {
+    ...item,
+    image: img.default
+  };
+}));
+
+const validSlides = slides.filter((s): s is NonNullable<typeof s> => s !== null);
+---
+
+{validSlides.length > 0 ? (
+<section class="relative h-screen w-full overflow-hidden bg-black" aria-label="Featured Photography">
+  {validSlides.map((slide, index) => (
+    <div 
+      class={`absolute inset-0 transition-opacity duration-1000 ${index === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+      data-slide={index}
+      data-active={index === 0}
+    >
+      <div class="absolute inset-0 bg-black/30 z-10" /> <!-- Overlay -->
+      
+      <Image 
+        src={slide.image} 
+        alt={slide.title}
+        width={1920}
+        height={1080}
+        class="h-full w-full object-cover animate-ken-burns"
+        loading={index === 0 ? "eager" : "lazy"}
+        fetchpriority={index === 0 ? "high" : "auto"}
+      />
+
+      <div class="absolute bottom-24 left-8 md:left-24 z-20 text-white max-w-2xl">
+        <h2 class="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-2 opacity-0 translate-y-4 animate-slide-up" style="animation-delay: 300ms;">
+          {slide.title}
+        </h2>
+        <p class="text-lg md:text-xl font-sans font-light tracking-wide opacity-0 translate-y-4 animate-slide-up" style="animation-delay: 500ms;">
+          {slide.caption}
+        </p>
+      </div>
+    </div>
+  ))}
+
+  <!-- Navigation -->
+  <button class="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-4 text-white/50 hover:text-white transition-colors cursor-pointer" id="prev-slide" aria-label="Previous Slide">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+    </svg>
+  </button>
+  <button class="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-4 text-white/50 hover:text-white transition-colors cursor-pointer" id="next-slide" aria-label="Next Slide">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+    </svg>
+  </button>
+  
+  <!-- Indicators -->
+  <div class="absolute bottom-8 right-8 flex gap-2 z-30">
+    {validSlides.map((_, index) => (
+      <button 
+        class={`w-12 h-1 rounded-full transition-all duration-300 ${index === 0 ? 'bg-white' : 'bg-white/30'}`}
+        aria-label={`Go to slide ${index + 1}`}
+        data-indicator={index}
+      />
+    ))}
+  </div>
+</section>
+) : (
+  <div class="h-screen w-full bg-neutral-900 flex items-center justify-center text-white">
+    <p>No featured images found. Run setup scripts.</p>
+  </div>
+)}
+
+<style>
+  @keyframes ken-burns {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+  }
+  
+  .animate-ken-burns {
+    animation: ken-burns 20s ease-out infinite alternate;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.8s ease-out forwards;
+  }
+
+  @keyframes slide-up {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('[data-slide]');
+  const indicators = document.querySelectorAll('[data-indicator]');
+  const totalSlides = slides.length;
+  let interval: ReturnType<typeof setInterval>;
+  let isPaused = false;
+
+  function showSlide(index: number) {
+    if (totalSlides === 0) return;
+    
+    slides.forEach(slide => {
+      slide.classList.remove('opacity-100', 'z-10');
+      slide.classList.add('opacity-0', 'z-0');
+    });
+    
+    indicators.forEach(ind => {
+      ind.classList.remove('bg-white');
+      ind.classList.add('bg-white/30');
+    });
+
+    const active = slides[index];
+    if (active) {
+        active.classList.remove('opacity-0', 'z-0');
+        active.classList.add('opacity-100', 'z-10');
+        
+        // Retrigger text animation
+        const title = active.querySelector('h2');
+        const caption = active.querySelector('p');
+        
+        if (title) {
+          title.style.animation = 'none';
+          title.offsetHeight; /* trigger reflow */
+          title.style.animation = 'slide-up 0.8s ease-out forwards 300ms';
+        }
+        if (caption) {
+          caption.style.animation = 'none';
+          caption.offsetHeight; /* trigger reflow */
+          caption.style.animation = 'slide-up 0.8s ease-out forwards 500ms';
+        }
+    }
+    
+    const activeInd = indicators[index];
+    if (activeInd) {
+        activeInd.classList.remove('bg-white/30');
+        activeInd.classList.add('bg-white');
+    }
+
+    currentSlide = index;
+  }
+
+  function nextSlide() {
+    showSlide((currentSlide + 1) % totalSlides);
+  }
+
+  function prevSlide() {
+    showSlide((currentSlide - 1 + totalSlides) % totalSlides);
+  }
+
+  function startTimer() {
+    stopTimer();
+    interval = setInterval(() => {
+      if (!isPaused) nextSlide();
+    }, 5000);
+  }
+
+  function stopTimer() {
+    if (interval) clearInterval(interval);
+  }
+
+  document.getElementById('next-slide')?.addEventListener('click', () => {
+    nextSlide();
+    startTimer();
+  });
+
+  document.getElementById('prev-slide')?.addEventListener('click', () => {
+    prevSlide();
+    startTimer();
+  });
+
+  indicators.forEach((ind, i) => {
+    ind.addEventListener('click', () => {
+      showSlide(i);
+      startTimer();
+    });
+  });
+
+  // Pause on hover
+  const container = document.querySelector('section');
+  container?.addEventListener('mouseenter', () => isPaused = true);
+  container?.addEventListener('mouseleave', () => isPaused = false);
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
+      nextSlide();
+      startTimer();
+    }
+    if (e.key === 'ArrowLeft') {
+      prevSlide();
+      startTimer();
+    }
+  });
+
+  if (totalSlides > 0) {
+    startTimer();
+  }
+</script>
