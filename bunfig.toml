@@ -1,0 +1,14 @@
+[install]
+# optimize for speed
+optional = true
+dev = true
+peer = true
+production = false
+exact = false
+auto = "auto"
+frozenLockfile = false
+dryRun = false
+
+[test]
+# vitest compatibility
+coverage = false
