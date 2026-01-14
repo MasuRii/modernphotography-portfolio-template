@@ -4,13 +4,15 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "@types/bun": "latest",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.53.0",
     "eslint": "^9.39.2",
     "eslint-plugin-astro": "^1.5.0",
     "prettier": "^3.7.4",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "tailwindcss": "^4.1.18"
   },
   "peerDependencies": {
     "typescript": "^5"
