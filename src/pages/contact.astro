@@ -161,13 +161,15 @@ const budgets = [
   </section>
 
 <script>
+  import { handleDemoFormSubmit } from '../utils/demo-form-handler';
+
   const form = document.getElementById('contact-form') as HTMLFormElement;
   
   if (form) {
     // Disable default HTML5 validation bubbles to use our custom UI
     form.noValidate = true;
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       let isValid = true;
       const inputs = form.querySelectorAll('input[required], textarea[required]');
 
@@ -198,6 +200,37 @@ const budgets = [
         // Focus first invalid field
         const firstInvalid = form.querySelector('[data-invalid="true"]') as HTMLElement;
         if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      // Valid form - attempt demo submission
+      const handled = await handleDemoFormSubmit(
+        e,
+        (loading) => {
+          const btn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+          if (loading) {
+            btn.disabled = true;
+            if (!btn.dataset.originalText) btn.dataset.originalText = btn.textContent || '';
+            btn.textContent = 'Sending...';
+          } else {
+            btn.disabled = false;
+            btn.textContent = btn.dataset.originalText || 'Send Inquiry';
+          }
+        },
+        (message) => {
+          const status = document.getElementById('form-status');
+          if (status) {
+            status.textContent = message;
+            status.classList.remove('hidden', 'text-red-500');
+            status.classList.add('text-green-500');
+          }
+        }
+      );
+
+      if (!handled) {
+        // Fallback for non-demo mode (real backend would go here)
+        e.preventDefault();
+        alert('Form submission is not configured in this template. Enable demo mode to simulate.');
       }
     });
 
@@ -210,6 +243,13 @@ const budgets = [
          const errorId = field.getAttribute('aria-describedby');
          const errorEl = errorId ? document.getElementById(errorId) : null;
          if (errorEl) errorEl.classList.add('hidden');
+      }
+      
+      // Clear global status on input
+      const status = document.getElementById('form-status');
+      if (status && !status.classList.contains('hidden')) {
+        status.classList.add('hidden');
+        status.textContent = '';
       }
     });
   }
