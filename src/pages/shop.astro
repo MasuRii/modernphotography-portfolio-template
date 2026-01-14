@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import galleryImages from '../data/gallery-images.json';
+import PrintCard from '../components/shop/PrintCard.astro';
 
 const title = "Print Shop | Modern Photography Portfolio";
 const description = "Limited edition fine art prints available for purchase.";
@@ -35,33 +36,13 @@ const printImages = await Promise.all(
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
       {printImages.map((image) => (
-        <article class="group">
-          <div class="aspect-[4/5] overflow-hidden bg-neutral-900 mb-6 relative">
-             {image.imageData ? (
-               <Image 
-                 src={image.imageData}
-                 alt={image.title}
-                 width={600}
-                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-               />
-             ) : (
-               <div class="w-full h-full flex items-center justify-center text-neutral-700">
-                 Image not found
-               </div>
-             )}
-             
-             <!-- Overlay/Badge if needed -->
-             {!image.imageData && <span class="absolute top-2 right-2 text-xs bg-red-500 text-white px-2 py-1">Missing</span>}
-          </div>
-          
-          <div class="space-y-2">
-            <div class="flex justify-between items-baseline">
-              <h2 class="text-white font-medium text-lg font-serif">{image.title}</h2>
-              <span class="text-neutral-400 text-sm">From $150</span>
-            </div>
-            <p class="text-neutral-600 text-xs uppercase tracking-widest">{image.category}</p>
-          </div>
-        </article>
+        image.imageData ? (
+          <PrintCard 
+            image={image.imageData}
+            title={image.title}
+            category={image.category}
+          />
+        ) : null
       ))}
     </div>
   </section>

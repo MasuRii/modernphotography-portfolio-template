@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  image: ImageMetadata;
+  title: string;
+  category: string;
+  basePrice?: number;
+}
+
+const { image, title, category, basePrice = 150 } = Astro.props;
+
+const sizes = [
+  { label: 'Small (12x18")', multiplier: 1 },
+  { label: 'Medium (20x30")', multiplier: 1.8 },
+  { label: 'Large (24x36")', multiplier: 2.5 },
+];
+
+const frames = [
+  { label: 'No Frame', price: 0 },
+  { label: 'Black Wood', price: 50 },
+  { label: 'White Wood', price: 50 },
+  { label: 'Natural Oak', price: 70 },
+];
+---
+
+<article class="print-card group">
+  <div class="aspect-[4/5] overflow-hidden bg-neutral-900 mb-6 relative">
+    <Image 
+      src={image}
+      alt={title}
+      width={600}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+  </div>
+  
+  <div class="space-y-4">
+    <div class="flex justify-between items-baseline">
+      <h2 class="text-white font-medium text-lg font-serif">{title}</h2>
+      <span class="text-white font-medium price-display" data-base-price={basePrice}>${basePrice}</span>
+    </div>
+    <p class="text-neutral-600 text-xs uppercase tracking-widest">{category}</p>
+
+    <!-- Selection UI -->
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs text-neutral-500 mb-1">Size</label>
+        <select class="size-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+          {sizes.map((s, i) => (
+            <option value={s.multiplier} selected={i === 0}>{s.label}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-neutral-500 mb-1">Frame</label>
+        <select class="frame-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+          {frames.map((f, i) => (
+            <option value={f.price} selected={i === 0}>{f.label}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <button class="add-to-cart-btn w-full bg-white text-black font-medium py-3 rounded hover:bg-neutral-200 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-black">
+      Add to Cart
+    </button>
+  </div>
+</article>
+
+<script>
+  // Handle price updates
+  document.querySelectorAll('.print-card').forEach(card => {
+    const sizeSelect = card.querySelector('.size-select') as HTMLSelectElement;
+    const frameSelect = card.querySelector('.frame-select') as HTMLSelectElement;
+    const priceDisplay = card.querySelector('.price-display') as HTMLElement;
+    const basePrice = parseFloat(priceDisplay.dataset.basePrice || '0');
+
+    function updatePrice() {
+      const multiplier = parseFloat(sizeSelect.value);
+      const framePrice = parseFloat(frameSelect.value);
+      const finalPrice = (basePrice * multiplier) + framePrice;
+      priceDisplay.textContent = `$${finalPrice.toFixed(0)}`;
+    }
+
+    sizeSelect.addEventListener('change', updatePrice);
+    frameSelect.addEventListener('change', updatePrice);
+  });
+</script>
