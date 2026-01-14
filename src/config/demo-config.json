@@ -54,6 +54,24 @@
       "pattern": "/newsletter",
       "feature": "Newsletter Signup",
       "message": "Success! (Demo Mode: No email was actually added to a list)."
+    },
+    {
+      "id": "pub-kinfolk",
+      "pattern": "kinfolk.com",
+      "feature": "Publication: Kinfolk",
+      "message": "In a production site, this would take you to the article in Kinfolk Magazine."
+    },
+    {
+      "id": "pub-aesthetica",
+      "pattern": "aestheticamagazine.com",
+      "feature": "Publication: Aesthetica",
+      "message": "In a production site, this would take you to the article in Aesthetica Magazine."
+    },
+    {
+      "id": "pub-cereal",
+      "pattern": "readcereal.com",
+      "feature": "Publication: Cereal",
+      "message": "In a production site, this would take you to the article in Cereal Magazine."
     }
   ]
 }
