@@ -100,12 +100,18 @@ const { images } = Astro.props;
   };
 
   const observer = new IntersectionObserver((entries) => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let delayCounter = 0;
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        // Add a small delay based on column index if possible, or just let natural timing work.
-        // We'll just remove opacity/translate immediately when in view.
-        entry.target.classList.remove('opacity-0', 'translate-y-8');
+        const el = entry.target as HTMLElement;
+        // Staggered delay for simultaneous entries
+        if (!prefersReducedMotion) {
+            el.style.transitionDelay = `${delayCounter * 100}ms`;
+        }
+        el.classList.remove('opacity-0', 'translate-y-8');
         observer.unobserve(entry.target);
+        delayCounter++;
       }
     });
   }, observerOptions);

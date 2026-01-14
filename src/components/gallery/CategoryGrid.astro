@@ -49,7 +49,7 @@ const categoryImages = await Promise.all(categories.map(async (cat) => {
               alt={`${cat.title} Gallery`}
               width={800}
               height={600}
-              class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+              class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02] opacity-0 transition-opacity duration-700 img-fade-in"
             />
           ) : (
                <div class="h-full w-full flex items-center justify-center bg-neutral-800 text-neutral-400">
@@ -111,5 +111,19 @@ const categoryImages = await Promise.all(categories.map(async (cat) => {
     card.addEventListener('mouseleave', () => {
       content.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
     });
+  });
+
+  // Image Fade In
+  const images = document.querySelectorAll('.img-fade-in');
+  images.forEach(img => {
+    const element = img as HTMLImageElement;
+    const handleLoad = () => {
+      element.classList.remove('opacity-0');
+    };
+    if (element.complete) {
+      handleLoad();
+    } else {
+      element.addEventListener('load', handleLoad);
+    }
   });
 </script>
