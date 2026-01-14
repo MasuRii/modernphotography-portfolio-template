@@ -1,0 +1,60 @@
+---
+import { isMenuOpen } from '../../store/nav';
+import ThemeToggle from '../ThemeToggle.astro';
+---
+
+<div
+  id="mobile-menu-overlay"
+  class="fixed inset-0 z-30 bg-white dark:bg-[#0a0a0a] transform transition-transform duration-300 ease-in-out translate-x-full md:hidden flex flex-col justify-center items-center opacity-0 pointer-events-none"
+>
+  <nav class="flex flex-col space-y-8 text-center">
+    <a href="/gallery/portraits" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+      Work
+    </a>
+    <a href="/about" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+      About
+    </a>
+    <a href="/shop" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+      Shop
+    </a>
+    <a href="/contact" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+      Contact
+    </a>
+  </nav>
+
+  <div class="mt-12">
+    <!-- Social Links Placeholder (will be replaced by actual components later) -->
+    <div class="flex space-x-6">
+      <!-- Icons would go here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  import { isMenuOpen } from '../../store/nav';
+
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const body = document.body;
+
+  isMenuOpen.subscribe(isOpen => {
+    if (!overlay) return;
+
+    if (isOpen) {
+      overlay.classList.remove('translate-x-full', 'opacity-0', 'pointer-events-none');
+      overlay.classList.add('translate-x-0', 'opacity-100', 'pointer-events-auto');
+      body.style.overflow = 'hidden'; // Prevent scrolling
+    } else {
+      overlay.classList.add('translate-x-full', 'opacity-0', 'pointer-events-none');
+      overlay.classList.remove('translate-x-0', 'opacity-100', 'pointer-events-auto');
+      body.style.overflow = '';
+    }
+  });
+
+  // Close menu when a link is clicked
+  const links = document.querySelectorAll('.mobile-link');
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      isMenuOpen.set(false);
+    });
+  });
+</script>

@@ -1,0 +1,91 @@
+---
+import ThemeToggle from '../ThemeToggle.astro';
+---
+
+<header
+  id="main-header"
+  class="fixed top-0 left-0 w-full z-40 transition-transform duration-300 ease-in-out bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="/" class="text-2xl font-serif font-bold tracking-tighter text-gray-900 dark:text-white">
+          MASURII
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-8 items-center">
+        <a href="/gallery/portraits" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+          Work
+        </a>
+        <a href="/about" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+          About
+        </a>
+        <a href="/shop" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+          Shop
+        </a>
+        <a href="/contact" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+          Contact
+        </a>
+        
+        <div class="border-l border-gray-200 dark:border-gray-700 pl-6 ml-2">
+          <ThemeToggle />
+        </div>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <div class="flex items-center md:hidden space-x-4">
+        <ThemeToggle />
+        <button
+          id="mobile-menu-btn"
+          type="button"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          aria-label="Toggle mobile menu"
+        >
+          <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  import { isMenuOpen } from '../../store/nav';
+
+  const header = document.getElementById('main-header');
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  let lastScrollY = window.scrollY;
+
+  // Handle Scroll (Hide/Show)
+  window.addEventListener('scroll', () => {
+    if (!header) return;
+    
+    // Don't hide if at the very top or if menu is open
+    if (window.scrollY < 10 || isMenuOpen.get()) {
+      header.style.transform = 'translateY(0)';
+      return;
+    }
+
+    if (window.scrollY > lastScrollY) {
+      // Scrolling down
+      header.style.transform = 'translateY(-100%)';
+    } else {
+      // Scrolling up
+      header.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollY = window.scrollY;
+  }, { passive: true });
+
+  // Handle Mobile Menu Toggle
+  mobileMenuBtn?.addEventListener('click', () => {
+    const current = isMenuOpen.get();
+    isMenuOpen.set(!current);
+  });
+</script>
