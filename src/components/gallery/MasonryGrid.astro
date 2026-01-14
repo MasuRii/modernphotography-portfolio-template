@@ -9,6 +9,13 @@ export interface GalleryImage {
   src: ImageMetadata;
   caption?: string;
   lqip?: string;
+  exif?: {
+    camera: string;
+    lens: string;
+    iso: number;
+    aperture: string;
+    shutter: string;
+  };
 }
 
 interface Props {
@@ -27,6 +34,7 @@ const { images } = Astro.props;
       data-title={image.title}
       data-category={image.category}
       data-caption={image.caption}
+      data-exif={JSON.stringify(image.exif)}
     >
       <div class="overflow-hidden rounded-sm bg-neutral-800 relative">
         {image.lqip && (
@@ -73,6 +81,7 @@ const { images } = Astro.props;
       title: el.dataset.title || '',
       category: el.dataset.category || '',
       caption: el.dataset.caption || '',
+      exif: el.dataset.exif ? JSON.parse(el.dataset.exif) : undefined,
     };
   });
 

@@ -4,7 +4,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
 
 <div
   id="demo-modal-backdrop"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-opacity duration-300"
+  class="fixed inset-0 z-[200] flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-opacity duration-300"
   aria-hidden="true"
 >
   <div
@@ -48,6 +48,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
 
 <script>
   import { modalState, closeDemoModal } from '../../store/demo';
+  import { isLightboxOpen } from '../../store/lightbox'; // Check for scroll lock conflict
 
   const backdrop = document.getElementById('demo-modal-backdrop');
   const modal = document.getElementById('demo-modal');
@@ -116,8 +117,10 @@ import { modalState, closeDemoModal } from '../../store/demo';
       previousActiveElement = null;
     }
 
-    // Enable body scroll
-    document.body.style.overflow = '';
+    // Enable body scroll only if lightbox is not open
+    if (!isLightboxOpen.get()) {
+      document.body.style.overflow = '';
+    }
   }
 
   function getFocusableElements(): HTMLElement[] {

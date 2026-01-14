@@ -50,6 +50,7 @@ const masonryImages = categoryImages
       caption: img.caption,
       src: resolved,
       lqip: lqipData[img.id],
+      exif: img.exif,
     };
   })
   .filter((img) => img !== null) as GalleryImage[];

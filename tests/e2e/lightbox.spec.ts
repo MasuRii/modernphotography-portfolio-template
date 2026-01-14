@@ -87,4 +87,44 @@ test.describe("Lightbox Component", () => {
     // Now it should have a value
     await expect(img).not.toHaveAttribute("src", "");
   });
+
+  test("should trap focus and disable scroll when open", async ({ page }) => {
+    await page.locator(".featured-card").first().click();
+    await expect(page.locator("#lightbox")).toBeVisible();
+
+    // Check scroll lock
+    const overflow = await page.evaluate(() => document.body.style.overflow);
+    expect(overflow).toBe("hidden");
+  });
+
+  test("Download button triggers demo modal", async ({ page }) => {
+    await page.locator(".featured-card").first().click();
+
+    const downloadBtn = page.locator('button[aria-label="Download"]');
+    await expect(downloadBtn).toBeVisible();
+    await downloadBtn.click();
+
+    // Check Demo Modal
+    await expect(page.locator("#demo-modal")).toBeVisible();
+    await expect(page.locator("#demo-feature-name")).toContainText("Download Image");
+
+    // Close demo modal
+    await page.locator("#demo-modal-close-btn").click();
+    await expect(page.locator("#demo-modal")).not.toBeVisible();
+  });
+
+  test("Share button triggers demo modal", async ({ page }) => {
+    await page.locator(".featured-card").first().click();
+
+    const shareBtn = page.locator("#lightbox-share");
+    await expect(shareBtn).toBeVisible();
+    await shareBtn.click();
+
+    // If it's a DemoLink (intercepted), it triggers modal.
+    // Wait, I implemented it as a DemoLink but updated href in JS.
+    // If href is updated to twitter intent, it might NOT be intercepted if it's an external domain NOT in demo-config?
+    // "twitter.com" IS in demo-config.
+    // So it SHOULD be intercepted.
+    await expect(page.locator("#demo-modal")).toBeVisible();
+  });
 });

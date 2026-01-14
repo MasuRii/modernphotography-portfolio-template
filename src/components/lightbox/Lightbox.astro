@@ -1,4 +1,6 @@
 ---
+import DemoLink from '../demo/DemoLink.astro';
+import DemoButton from '../demo/DemoButton.astro';
 // Lightbox.astro
 ---
 
@@ -7,9 +9,35 @@
   role="dialog"
   aria-modal="true"
   aria-label="Image Gallery"
-  class="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(10,10,10,0.95)] opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
+  class="fixed inset-0 z-[100] flex items-center justify-center bg-[rgba(10,10,10,0.95)] backdrop-blur-xl opacity-0 pointer-events-none transition-opacity duration-300 ease-out"
   tabindex="-1"
 >
+  <!-- Top Bar -->
+  <div class="absolute top-0 left-0 right-0 p-6 flex justify-between items-start z-[110]">
+    <div class="flex items-center gap-4">
+      <span id="lightbox-counter" class="text-white/60 font-mono text-sm tracking-widest"></span>
+    </div>
+
+    <div class="flex items-center gap-4 pr-12">
+        <DemoButton 
+            feature="Download Image" 
+            demoMessage="Downloading high-res images is disabled in demo mode."
+            class="text-white/70 hover:text-white p-2 transition-colors"
+            aria-label="Download"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        </DemoButton>
+        <DemoLink 
+            href="#" 
+            id="lightbox-share"
+            class="text-white/70 hover:text-white p-2 transition-colors"
+            aria-label="Share"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+        </DemoLink>
+    </div>
+  </div>
+
   <!-- Close Button -->
   <button
     id="lightbox-close"
@@ -59,11 +87,16 @@
     <!-- Caption Overlay -->
     <div
       id="lightbox-caption-container"
-      class="absolute bottom-0 left-0 right-0 p-8 text-center text-white bg-gradient-to-t from-black/80 to-transparent pointer-events-none opacity-0 transition-opacity duration-300 delay-150"
+      class="absolute bottom-0 left-0 right-0 p-8 text-center text-white bg-gradient-to-t from-black/80 to-transparent pointer-events-none opacity-0 transition-opacity duration-300 delay-150 flex flex-col items-center"
     >
         <span id="lightbox-category" class="block text-xs font-light uppercase tracking-[0.2em] text-neutral-300 mb-2"></span>
-        <h3 id="lightbox-title" class="text-xl md:text-2xl font-serif font-normal tracking-wide"></h3>
+        <h2 id="lightbox-title" class="text-xl md:text-2xl font-serif font-normal tracking-wide"></h2>
         <p id="lightbox-caption" class="text-sm font-light text-neutral-400 mt-2 max-w-2xl mx-auto hidden"></p>
+        
+        <!-- EXIF Data -->
+        <div id="lightbox-exif" class="mt-4 flex flex-wrap justify-center gap-4 text-xs font-mono text-neutral-500 hidden">
+            <!-- Populated via JS -->
+        </div>
     </div>
   </div>
 </div>
@@ -76,6 +109,9 @@
   const titleElement = document.getElementById('lightbox-title');
   const categoryElement = document.getElementById('lightbox-category');
   const captionElement = document.getElementById('lightbox-caption');
+  const exifElement = document.getElementById('lightbox-exif');
+  const counterElement = document.getElementById('lightbox-counter');
+  const shareLink = document.getElementById('lightbox-share') as HTMLAnchorElement;
   const captionContainer = document.getElementById('lightbox-caption-container');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
@@ -201,19 +237,48 @@
         if (images[index]) {
             const img = images[index];
             if (imgElement) {
-                // Preload adjacent images could be added here
+                // Preload adjacent images
+                const nextIdx = (index + 1) % images.length;
+                const prevIdx = (index - 1 + images.length) % images.length;
+                new Image().src = images[nextIdx].src;
+                new Image().src = images[prevIdx].src;
+
                 imgElement.src = img.src;
                 imgElement.alt = img.alt || img.title || 'Gallery image';
             }
             if (titleElement) titleElement.textContent = img.title || '';
             if (categoryElement) categoryElement.textContent = img.category || '';
+            if (counterElement) counterElement.textContent = `${index + 1} / ${images.length}`;
             
+            // Share Link Update (placeholder)
+            if (shareLink) shareLink.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(img.title || '')}&url=${encodeURIComponent(window.location.href)}`;
+
             if (captionElement) {
                 if (img.caption) {
                     captionElement.textContent = img.caption;
                     captionElement.classList.remove('hidden');
                 } else {
                     captionElement.classList.add('hidden');
+                }
+            }
+
+            if (exifElement) {
+                // EXIF requires data passed from store. 
+                // We need to update map logic below to include EXIF.
+                // Assuming img.exif exists (we need to update mapping first)
+                // Cast to any for now or update interface
+                const exif = (img as any).exif;
+                if (exif) {
+                    exifElement.innerHTML = `
+                        <span>${exif.camera || ''}</span>
+                        <span>${exif.lens || ''}</span>
+                        <span>${exif.iso ? 'ISO ' + exif.iso : ''}</span>
+                        <span>${exif.aperture || ''}</span>
+                        <span>${exif.shutter || ''}</span>
+                    `;
+                    exifElement.classList.remove('hidden');
+                } else {
+                    exifElement.classList.add('hidden');
                 }
             }
             
