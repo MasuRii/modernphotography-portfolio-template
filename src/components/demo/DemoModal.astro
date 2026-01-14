@@ -1,0 +1,133 @@
+---
+import { modalState, closeDemoModal } from '../../store/demo';
+---
+
+<div
+  id="demo-modal-backdrop"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+  aria-hidden="true"
+>
+  <div
+    id="demo-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="demo-modal-title"
+    aria-describedby="demo-modal-desc"
+    class="bg-white dark:bg-gray-900 rounded-lg shadow-xl max-w-md w-full mx-4 p-6 transform scale-95 transition-transform duration-300"
+    tabindex="-1"
+  >
+    <div class="text-center">
+      <h2
+        id="demo-modal-title"
+        class="text-xl font-bold text-gray-900 dark:text-white mb-2"
+      >
+        Demo Mode
+      </h2>
+      <p
+        id="demo-feature-name"
+        class="text-sm font-medium text-blue-600 dark:text-blue-400 mb-4"
+      >
+        <!-- Dynamic Feature Name -->
+      </p>
+      <p
+        id="demo-modal-desc"
+        class="text-gray-600 dark:text-gray-300 mb-6"
+      >
+        <!-- Dynamic Message -->
+      </p>
+
+      <button
+        id="demo-modal-close-btn"
+        class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors w-full sm:w-auto"
+      >
+        Got it
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { modalState, closeDemoModal } from '../../store/demo';
+
+  const backdrop = document.getElementById('demo-modal-backdrop');
+  const modal = document.getElementById('demo-modal');
+  const title = document.getElementById('demo-modal-title');
+  const featureEl = document.getElementById('demo-feature-name');
+  const descEl = document.getElementById('demo-modal-desc');
+  const closeBtn = document.getElementById('demo-modal-close-btn');
+
+  let previousActiveElement: HTMLElement | null = null;
+
+  // Subscribe to store changes
+  modalState.subscribe((state) => {
+    if (state.isOpen) {
+      openModal(state.feature, state.message);
+    } else {
+      closeModal();
+    }
+  });
+
+  function openModal(feature: string, message: string) {
+    if (!backdrop || !modal || !featureEl || !descEl) return;
+
+    // Update content
+    featureEl.textContent = feature;
+    descEl.textContent = message;
+
+    // Show modal
+    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop.classList.add('opacity-100', 'pointer-events-auto'); // Ensure visible
+    backdrop.setAttribute('aria-hidden', 'false');
+    
+    // Scale animation
+    modal.classList.remove('scale-95');
+    modal.classList.add('scale-100');
+
+    // Save focus and trap
+    previousActiveElement = document.activeElement as HTMLElement;
+    closeBtn?.focus();
+    
+    // Disable body scroll
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!backdrop || !modal) return;
+
+    // Hide modal
+    backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+    backdrop.classList.add('opacity-0', 'pointer-events-none');
+    backdrop.setAttribute('aria-hidden', 'true');
+
+    // Scale animation
+    modal.classList.remove('scale-100');
+    modal.classList.add('scale-95');
+
+    // Restore focus
+    if (previousActiveElement) {
+      previousActiveElement.focus();
+      previousActiveElement = null;
+    }
+
+    // Enable body scroll
+    document.body.style.overflow = '';
+  }
+
+  // Event Listeners
+  closeBtn?.addEventListener('click', () => {
+    closeDemoModal();
+  });
+
+  backdrop?.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      closeDemoModal();
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const state = modalState.get();
+    if (state.isOpen && e.key === 'Escape') {
+      closeDemoModal();
+    }
+  });
+</script>
