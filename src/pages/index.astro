@@ -5,12 +5,15 @@ import DemoLink from '../components/demo/DemoLink.astro';
 import DemoButton from '../components/demo/DemoButton.astro';
 import DemoSuccessMessage from '../components/demo/DemoSuccessMessage.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
+import { getHeroSlides } from '../utils/hero';
+
+const slides = await getHeroSlides();
 ---
 
-<BaseLayout title="Modern Photography Portfolio">
-  <HeroSlider />
+<BaseLayout title="Modern Photography Portfolio" fullScreen={true}>
+  <HeroSlider slides={slides} />
   
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-4 py-8 mt-16">
     <h1 class="text-4xl font-serif mb-8">Astro Setup Complete</h1>
     
     <!-- Demo Mode Test Elements -->

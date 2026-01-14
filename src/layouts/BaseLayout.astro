@@ -11,13 +11,19 @@ interface Props {
   description?: string;
   image?: string;
   type?: 'website' | 'article' | 'profile';
+  fullScreen?: boolean;
+  preloadImage?: string;
+  preloadSrcset?: string;
 }
 
 const { 
   title, 
   description = "Modern Photography Portfolio",
   image = "/og-default.jpg",
-  type = "website"
+  type = "website",
+  fullScreen = false,
+  preloadImage,
+  preloadSrcset
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || "http://localhost:4321");
@@ -35,6 +41,17 @@ const socialImageURL = new URL(image, Astro.url);
     
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
+
+    <!-- Preload LCP Image -->
+    {preloadImage && (
+      <link 
+        rel="preload" 
+        as="image" 
+        href={preloadImage} 
+        imagesrcset={preloadSrcset}
+        fetchpriority="high" 
+      />
+    )}
 
     <!-- Google Fonts Preloading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -70,7 +87,7 @@ const socialImageURL = new URL(image, Astro.url);
       })();
     </script>
   </head>
-  <body class="bg-[#0a0a0a] text-gray-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white pt-16">
+  <body class={`bg-[#0a0a0a] text-gray-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white ${fullScreen ? '' : 'pt-16'}`}>
     <DemoBanner />
     <Header />
     
