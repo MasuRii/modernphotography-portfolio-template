@@ -1,8 +1,59 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import portraitImage from '../assets/images/gallery/portraits-1.jpg';
+
+const title = "About Me";
+const description = "Professional photographer based in New York City, specializing in portrait, editorial, and commercial photography.";
 ---
 
-<BaseLayout title="About - Modern Photography Portfolio">
-  <h1>About Me</h1>
-  <p>This is the about page.</p>
+<BaseLayout title={`${title} | Modern Photography Portfolio`} description={description}>
+  <section class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+    <!-- Portrait Image Section -->
+    <div class="relative h-[50vh] lg:h-auto overflow-hidden bg-neutral-800 group">
+      <div class="absolute inset-0 z-10 bg-black/10 group-hover:bg-black/0 transition-colors duration-700"></div>
+      <Image 
+        src={portraitImage} 
+        alt="Photographer Portrait" 
+        class="w-full h-full object-cover object-center scale-105 group-hover:scale-100 transition-transform duration-1000 ease-out"
+        width={1200}
+        quality={90}
+      />
+    </div>
+
+    <!-- Content Section -->
+    <div class="relative flex flex-col justify-center px-6 py-20 md:px-12 lg:px-20 xl:px-32 bg-[#0a0a0a]">
+      <div class="max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up" style="animation-delay: 200ms; animation-fill-mode: forwards;">
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-8 tracking-tight">
+          Capturing <span class="text-neutral-500 italic">soul</span> <br/> in every frame.
+        </h1>
+        
+        <div class="space-y-6 text-neutral-400 text-lg leading-relaxed font-light">
+          <p>
+            This is the about page structure. The actual bio content will be populated in the next step from the data source.
+          </p>
+          <p>
+            The layout uses a split design with a full-height portrait on large screens and a stacked layout on mobile devices, ensuring the image remains prominent.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+</style>
