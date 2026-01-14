@@ -3,13 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import DemoLink from '../components/demo/DemoLink.astro';
 import DemoButton from '../components/demo/DemoButton.astro';
 import DemoSuccessMessage from '../components/demo/DemoSuccessMessage.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 ---
 
 <BaseLayout title="Modern Photography Portfolio">
   <h1>Astro Setup Complete</h1>
-  <nav>
+  <nav class="flex items-center gap-4">
     <DemoLink href="https://instagram.com/masurii">Instagram</DemoLink>
     <a href="/about" id="internal-link">About</a>
+    <ThemeToggle />
   </nav>
   
   <DemoButton feature="Checkout" class="btn-checkout">Checkout</DemoButton>
