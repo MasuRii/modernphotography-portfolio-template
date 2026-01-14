@@ -67,9 +67,11 @@ const budgets = [
                 id="name" 
                 name="name" 
                 required
-                class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"
+                aria-describedby="name-error"
+                class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors data-[invalid=true]:border-red-500"
                 placeholder="Jane Doe"
               />
+              <p id="name-error" class="hidden text-red-500 text-sm mt-1" role="alert"></p>
             </div>
             <div class="space-y-2">
               <label for="email" class="block text-sm font-medium text-white">Email</label>
@@ -78,9 +80,11 @@ const budgets = [
                 id="email" 
                 name="email" 
                 required
-                class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors"
+                aria-describedby="email-error"
+                class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors data-[invalid=true]:border-red-500"
                 placeholder="jane@example.com"
               />
+              <p id="email-error" class="hidden text-red-500 text-sm mt-1" role="alert"></p>
             </div>
           </div>
 
@@ -132,9 +136,11 @@ const budgets = [
               name="message" 
               rows="5" 
               required
-              class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors resize-none"
+              aria-describedby="message-error"
+              class="w-full bg-neutral-950 border border-neutral-800 rounded-md px-4 py-3 text-neutral-200 focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition-colors resize-none data-[invalid=true]:border-red-500"
               placeholder="Tell me about your vision, timeline, and any specific requirements..."
             ></textarea>
+            <p id="message-error" class="hidden text-red-500 text-sm mt-1" role="alert"></p>
           </div>
 
           <!-- Submit Button -->
@@ -153,4 +159,71 @@ const budgets = [
 
     </div>
   </section>
-</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  
+  if (form) {
+    // Disable default HTML5 validation bubbles to use our custom UI
+    form.noValidate = true;
+
+    form.addEventListener('submit', (e) => {
+      let isValid = true;
+      const inputs = form.querySelectorAll('input[required], textarea[required]');
+
+      inputs.forEach((input) => {
+        const field = input as HTMLInputElement | HTMLTextAreaElement;
+        const errorId = field.getAttribute('aria-describedby');
+        const errorEl = errorId ? document.getElementById(errorId) : null;
+        
+        // Reset state
+        field.removeAttribute('data-invalid');
+        field.setAttribute('aria-invalid', 'false');
+        if (errorEl) {
+          errorEl.classList.add('hidden');
+          errorEl.textContent = '';
+        }
+
+        if (!field.value.trim()) {
+          isValid = false;
+          showError(field, errorEl, `${field.name.charAt(0).toUpperCase() + field.name.slice(1)} is required`);
+        } else if (field.type === 'email' && !validateEmail(field.value)) {
+          isValid = false;
+          showError(field, errorEl, 'Please enter a valid email address');
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+        // Focus first invalid field
+        const firstInvalid = form.querySelector('[data-invalid="true"]') as HTMLElement;
+        if (firstInvalid) firstInvalid.focus();
+      }
+    });
+
+    // Real-time validation clearing
+    form.addEventListener('input', (e) => {
+      const field = e.target as HTMLInputElement;
+      if (field.hasAttribute('data-invalid')) {
+         field.removeAttribute('data-invalid');
+         field.setAttribute('aria-invalid', 'false');
+         const errorId = field.getAttribute('aria-describedby');
+         const errorEl = errorId ? document.getElementById(errorId) : null;
+         if (errorEl) errorEl.classList.add('hidden');
+      }
+    });
+  }
+
+  function showError(field: HTMLElement, errorEl: HTMLElement | null, message: string) {
+    field.setAttribute('data-invalid', 'true');
+    field.setAttribute('aria-invalid', 'true');
+    if (errorEl) {
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+    }
+  }
+
+  function validateEmail(email: string) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+</script>
