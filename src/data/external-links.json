@@ -1,0 +1,18 @@
+{
+  "printShop": {
+    "url": "https://printshop.com/elenav_photo",
+    "label": "Visit Print Shop"
+  },
+  "booking": {
+    "url": "https://calendly.com/elenav_photo",
+    "label": "Book a Session"
+  },
+  "newsletter": {
+    "url": "https://substack.com/@elenav_photo",
+    "label": "Subscribe to Newsletter"
+  },
+  "clientPortal": {
+    "url": "https://pixieset.com/elenav_photo",
+    "label": "Client Login"
+  }
+}
