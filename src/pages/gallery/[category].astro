@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import galleryImages from '../../data/gallery-images.json';
+import type { ImageMetadata } from 'astro';
+
+export async function getStaticPaths() {
+  const categories = [...new Set(galleryImages.map((img) => img.category))];
+  
+  return categories.map((category) => {
+    return {
+      params: { category },
+      props: { category },
+    };
+  });
+}
+
+const { category } = Astro.props;
+
+// Capitalize category for display
+const categoryTitle = category.charAt(0).toUpperCase() + category.slice(1);
+
+// Filter images for this category
+const categoryImages = galleryImages.filter((img) => img.category === category);
+
+// Image resolution logic (shared with FeaturedGallery)
+const imagesGlob = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/**/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+});
+
+const getResolvedImage = (srcPath: string) => {
+  const filename = srcPath.split('/').pop();
+  if (!filename) return undefined;
+  const foundKey = Object.keys(imagesGlob).find(key => key.endsWith(filename));
+  return foundKey && imagesGlob[foundKey] ? imagesGlob[foundKey].default : undefined;
+};
+---
+
+<BaseLayout title={`${categoryTitle} Portfolio`} description={`View my ${category} photography portfolio.`}>
+  <div class="pt-32 pb-20 px-4 md:px-8 bg-neutral-900 min-h-screen">
+    <div class="max-w-7xl mx-auto">
+      {/* Header */}
+      <div class="flex flex-col items-center mb-16 text-center">
+        <h1 class="text-4xl md:text-5xl font-serif tracking-wide text-white mb-6">
+          {categoryTitle}
+        </h1>
+        <div class="w-24 h-px bg-white/30 mb-6"></div>
+        <p class="text-neutral-400 max-w-2xl font-light text-lg">
+          A collection of {category} moments captured in time.
+        </p>
+      </div>
+
+      {/* Grid Layout (Placeholder for Masonry) */}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {categoryImages.map((image, index) => {
+          const resolvedImage = getResolvedImage(image.src);
+          if (!resolvedImage) return null;
+
+          return (
+            <div 
+              class="group relative mb-8 break-inside-avoid cursor-pointer gallery-item"
+              data-index={index}
+              data-src={resolvedImage.src}
+              data-title={image.title}
+              data-category={image.category}
+              data-caption={image.caption}
+            >
+              <div class="overflow-hidden rounded-sm bg-neutral-800">
+                <Image
+                  src={resolvedImage}
+                  alt={image.title}
+                  width={800}
+                  class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              
+              {/* Overlay */}
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                 <h3 class="text-xl font-serif text-white translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                  {image.title}
+                </h3>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      
+      {categoryImages.length === 0 && (
+        <div class="text-center py-20 text-neutral-500">
+          <p>No images found in this category yet.</p>
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { openLightbox } from '../../store/lightbox';
+  import type { LightboxImage } from '../../store/lightbox';
+
+  const items = document.querySelectorAll('.gallery-item');
+  const images: LightboxImage[] = Array.from(items).map((item) => {
+    const el = item as HTMLElement;
+    return {
+      id: String(el.dataset.index),
+      src: el.dataset.src || '',
+      title: el.dataset.title || '',
+      category: el.dataset.category || '',
+      caption: el.dataset.caption || '',
+    };
+  });
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      const index = Number((item as HTMLElement).dataset.index);
+      openLightbox(images, index);
+    });
+  });
+</script>
