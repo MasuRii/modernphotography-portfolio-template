@@ -1,1 +1,962 @@
-[]
+[
+  {
+    "id": "portraits-1",
+    "src": "/images/gallery/portraits/portraits-1.jpg",
+    "category": "portraits",
+    "title": "Silent Gaze",
+    "caption": "A captured moment from the portraits series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-2",
+    "src": "/images/gallery/portraits/portraits-2.jpg",
+    "category": "portraits",
+    "title": "Urban Soul",
+    "caption": "A captured moment from the portraits series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-3",
+    "src": "/images/gallery/portraits/portraits-3.jpg",
+    "category": "portraits",
+    "title": "Fading Light",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-4",
+    "src": "/images/gallery/portraits/portraits-4.jpg",
+    "category": "portraits",
+    "title": "The Artist",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-5",
+    "src": "/images/gallery/portraits/portraits-5.jpg",
+    "category": "portraits",
+    "title": "Tokyo Drifter",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-6",
+    "src": "/images/gallery/portraits/portraits-6.jpg",
+    "category": "portraits",
+    "title": "Morning Coffee",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-7",
+    "src": "/images/gallery/portraits/portraits-7.jpg",
+    "category": "portraits",
+    "title": "Shadow Play",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-8",
+    "src": "/images/gallery/portraits/portraits-8.jpg",
+    "category": "portraits",
+    "title": "Neon Dreams",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-9",
+    "src": "/images/gallery/portraits/portraits-9.jpg",
+    "category": "portraits",
+    "title": "Solitude",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "portraits-10",
+    "src": "/images/gallery/portraits/portraits-10.jpg",
+    "category": "portraits",
+    "title": "The Wait",
+    "caption": "A captured moment from the portraits series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-1",
+    "src": "/images/gallery/landscapes/landscapes-1.jpg",
+    "category": "landscapes",
+    "title": "Misty Valley",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-2",
+    "src": "/images/gallery/landscapes/landscapes-2.jpg",
+    "category": "landscapes",
+    "title": "Mountain Peak",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-3",
+    "src": "/images/gallery/landscapes/landscapes-3.jpg",
+    "category": "landscapes",
+    "title": "Ocean Whisper",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-4",
+    "src": "/images/gallery/landscapes/landscapes-4.jpg",
+    "category": "landscapes",
+    "title": "Desert Winds",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-5",
+    "src": "/images/gallery/landscapes/landscapes-5.jpg",
+    "category": "landscapes",
+    "title": "Forest Deep",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-6",
+    "src": "/images/gallery/landscapes/landscapes-6.jpg",
+    "category": "landscapes",
+    "title": "Winter Silence",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-7",
+    "src": "/images/gallery/landscapes/landscapes-7.jpg",
+    "category": "landscapes",
+    "title": "Autumn Gold",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-8",
+    "src": "/images/gallery/landscapes/landscapes-8.jpg",
+    "category": "landscapes",
+    "title": "River Flow",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-9",
+    "src": "/images/gallery/landscapes/landscapes-9.jpg",
+    "category": "landscapes",
+    "title": "Storm Rising",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "landscapes-10",
+    "src": "/images/gallery/landscapes/landscapes-10.jpg",
+    "category": "landscapes",
+    "title": "Sunset Hues",
+    "caption": "A captured moment from the landscapes series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-1",
+    "src": "/images/gallery/street-photography/street-photography-1.jpg",
+    "category": "street-photography",
+    "title": "Crossing Shibuya",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-2",
+    "src": "/images/gallery/street-photography/street-photography-2.jpg",
+    "category": "street-photography",
+    "title": "Rainy Night",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-3",
+    "src": "/images/gallery/street-photography/street-photography-3.jpg",
+    "category": "street-photography",
+    "title": "Subway Life",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-4",
+    "src": "/images/gallery/street-photography/street-photography-4.jpg",
+    "category": "street-photography",
+    "title": "Market Chaos",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-5",
+    "src": "/images/gallery/street-photography/street-photography-5.jpg",
+    "category": "street-photography",
+    "title": "Lonely Walker",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-6",
+    "src": "/images/gallery/street-photography/street-photography-6.jpg",
+    "category": "street-photography",
+    "title": "City Reflection",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-7",
+    "src": "/images/gallery/street-photography/street-photography-7.jpg",
+    "category": "street-photography",
+    "title": "Neon Alley",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-8",
+    "src": "/images/gallery/street-photography/street-photography-8.jpg",
+    "category": "street-photography",
+    "title": "Bus Stop",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-9",
+    "src": "/images/gallery/street-photography/street-photography-9.jpg",
+    "category": "street-photography",
+    "title": "Traffic Blur",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "street-photography-10",
+    "src": "/images/gallery/street-photography/street-photography-10.jpg",
+    "category": "street-photography",
+    "title": "Vendor's Smile",
+    "caption": "A captured moment from the street-photography series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-1",
+    "src": "/images/gallery/events/events-1.jpg",
+    "category": "events",
+    "title": "The Vows",
+    "caption": "A captured moment from the events series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-2",
+    "src": "/images/gallery/events/events-2.jpg",
+    "category": "events",
+    "title": "Jazz Night",
+    "caption": "A captured moment from the events series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-3",
+    "src": "/images/gallery/events/events-3.jpg",
+    "category": "events",
+    "title": "First Dance",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-4",
+    "src": "/images/gallery/events/events-4.jpg",
+    "category": "events",
+    "title": "Concert Crowd",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-5",
+    "src": "/images/gallery/events/events-5.jpg",
+    "category": "events",
+    "title": "Festival Lights",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-6",
+    "src": "/images/gallery/events/events-6.jpg",
+    "category": "events",
+    "title": "Backstage",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-7",
+    "src": "/images/gallery/events/events-7.jpg",
+    "category": "events",
+    "title": "Cheers",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-8",
+    "src": "/images/gallery/events/events-8.jpg",
+    "category": "events",
+    "title": "The Speech",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-9",
+    "src": "/images/gallery/events/events-9.jpg",
+    "category": "events",
+    "title": "Confetti Fall",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "events-10",
+    "src": "/images/gallery/events/events-10.jpg",
+    "category": "events",
+    "title": "Last Song",
+    "caption": "A captured moment from the events series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-1",
+    "src": "/images/gallery/editorial/editorial-1.jpg",
+    "category": "editorial",
+    "title": "Vogue September",
+    "caption": "A captured moment from the editorial series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-2",
+    "src": "/images/gallery/editorial/editorial-2.jpg",
+    "category": "editorial",
+    "title": "Kinfolk Feature",
+    "caption": "A captured moment from the editorial series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-3",
+    "src": "/images/gallery/editorial/editorial-3.jpg",
+    "category": "editorial",
+    "title": "Fashion Week",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-4",
+    "src": "/images/gallery/editorial/editorial-4.jpg",
+    "category": "editorial",
+    "title": "Studio Session",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-5",
+    "src": "/images/gallery/editorial/editorial-5.jpg",
+    "category": "editorial",
+    "title": "Texture Study",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-6",
+    "src": "/images/gallery/editorial/editorial-6.jpg",
+    "category": "editorial",
+    "title": "Monochrome Mood",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-7",
+    "src": "/images/gallery/editorial/editorial-7.jpg",
+    "category": "editorial",
+    "title": "Red Dress",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-8",
+    "src": "/images/gallery/editorial/editorial-8.jpg",
+    "category": "editorial",
+    "title": "Vintage Vibes",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-9",
+    "src": "/images/gallery/editorial/editorial-9.jpg",
+    "category": "editorial",
+    "title": "Modern Muse",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "editorial-10",
+    "src": "/images/gallery/editorial/editorial-10.jpg",
+    "category": "editorial",
+    "title": "Accessory Detail",
+    "caption": "A captured moment from the editorial series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-1",
+    "src": "/images/gallery/architecture/architecture-1.jpg",
+    "category": "architecture",
+    "title": "Steel Curves",
+    "caption": "A captured moment from the architecture series.",
+    "featured": true,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 110,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-2",
+    "src": "/images/gallery/architecture/architecture-2.jpg",
+    "category": "architecture",
+    "title": "Glass Tower",
+    "caption": "A captured moment from the architecture series.",
+    "featured": true,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 120,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-3",
+    "src": "/images/gallery/architecture/architecture-3.jpg",
+    "category": "architecture",
+    "title": "Concrete Jungle",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 130,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-4",
+    "src": "/images/gallery/architecture/architecture-4.jpg",
+    "category": "architecture",
+    "title": "Spiral Stair",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 140,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-5",
+    "src": "/images/gallery/architecture/architecture-5.jpg",
+    "category": "architecture",
+    "title": "Geometric Shadow",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 150,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-6",
+    "src": "/images/gallery/architecture/architecture-6.jpg",
+    "category": "architecture",
+    "title": "Bridge Lines",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 160,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-7",
+    "src": "/images/gallery/architecture/architecture-7.jpg",
+    "category": "architecture",
+    "title": "Old Facade",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 170,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-8",
+    "src": "/images/gallery/architecture/architecture-8.jpg",
+    "category": "architecture",
+    "title": "Sky Reflection",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 180,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-9",
+    "src": "/images/gallery/architecture/architecture-9.jpg",
+    "category": "architecture",
+    "title": "Minimal Wall",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": false,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 190,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  },
+  {
+    "id": "architecture-10",
+    "src": "/images/gallery/architecture/architecture-10.jpg",
+    "category": "architecture",
+    "title": "Urban Canyon",
+    "caption": "A captured moment from the architecture series.",
+    "featured": false,
+    "printAvailable": true,
+    "exif": {
+      "camera": "Sony A7RV",
+      "lens": "35mm f/1.4 GM",
+      "iso": 200,
+      "aperture": "f/1.4",
+      "shutter": "1/250s"
+    }
+  }
+]
