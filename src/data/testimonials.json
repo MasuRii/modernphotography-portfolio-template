@@ -1,0 +1,44 @@
+[
+  {
+    "id": "t1",
+    "name": "Sarah Chen",
+    "company": "Vogue Japan",
+    "quote": "Elena has an uncanny ability to capture the soul of a subject. Her work on our fall editorial was nothing short of transformative.",
+    "projectType": "Editorial"
+  },
+  {
+    "id": "t2",
+    "name": "Marcus Thorne",
+    "company": "Thorne Architects",
+    "quote": "We've worked with many photographers, but none understand light and structure quite like her. She made our buildings breathe.",
+    "projectType": "Architecture"
+  },
+  {
+    "id": "t3",
+    "name": "Julia & James",
+    "company": "Private Clients",
+    "quote": "Looking at our wedding photos feels like watching a beautiful foreign film where we are the stars. Absolute magic.",
+    "projectType": "Events"
+  },
+  {
+    "id": "t4",
+    "name": "Hiroshi Tanaka",
+    "company": "Blue Note Tokyo",
+    "quote": "The energy of jazz is hard to capture in a still image, yet she managed to visualize the music perfectly.",
+    "projectType": "Events"
+  },
+  {
+    "id": "t5",
+    "name": "Amelia Voss",
+    "company": "Independent Curator",
+    "quote": "Her street photography doesn't just document; it interprets. There's a narrative in every shadow.",
+    "projectType": "Art Collection"
+  },
+  {
+    "id": "t6",
+    "name": "David Miller",
+    "company": "TechCrunch",
+    "quote": "Professional, efficient, and creatively brilliant. The executive portraits she took elevated our entire brand identity.",
+    "projectType": "Corporate"
+  }
+]
