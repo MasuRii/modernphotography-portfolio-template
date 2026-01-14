@@ -22,6 +22,10 @@ const frames = [
   { label: 'White Wood', price: 50 },
   { label: 'Natural Oak', price: 70 },
 ];
+
+const uniqueId = Math.random().toString(36).slice(2, 11);
+const sizeId = `size-${uniqueId}`;
+const frameId = `frame-${uniqueId}`;
 ---
 
 <article class="print-card group">
@@ -39,21 +43,21 @@ const frames = [
       <h2 class="text-white font-medium text-lg font-serif">{title}</h2>
       <span class="text-white font-medium price-display" data-base-price={basePrice}>${basePrice}</span>
     </div>
-    <p class="text-neutral-600 text-xs uppercase tracking-widest">{category}</p>
+    <p class="text-neutral-400 text-xs uppercase tracking-widest">{category}</p>
 
     <!-- Selection UI -->
     <div class="grid grid-cols-2 gap-4">
       <div>
-        <label class="block text-xs text-neutral-500 mb-1">Size</label>
-        <select class="size-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+        <label for={sizeId} class="block text-xs text-neutral-400 mb-1">Size</label>
+        <select id={sizeId} class="size-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
           {sizes.map((s, i) => (
             <option value={s.multiplier} selected={i === 0}>{s.label}</option>
           ))}
         </select>
       </div>
       <div>
-        <label class="block text-xs text-neutral-500 mb-1">Frame</label>
-        <select class="frame-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
+        <label for={frameId} class="block text-xs text-neutral-400 mb-1">Frame</label>
+        <select id={frameId} class="frame-select w-full bg-neutral-900 border border-neutral-800 text-neutral-300 text-sm rounded px-2 py-2 focus:outline-none focus:border-white transition-colors">
           {frames.map((f, i) => (
             <option value={f.price} selected={i === 0}>{f.label}</option>
           ))}
