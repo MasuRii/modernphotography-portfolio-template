@@ -1,5 +1,5 @@
 import sharp from "sharp";
-import { readdir, mkdir, stat, writeFile } from "node:fs/promises";
+import { readdir, mkdir, writeFile } from "node:fs/promises";
 import { join, extname, basename } from "node:path";
 import { existsSync } from "node:fs";
 
@@ -16,25 +16,23 @@ const VARIANTS = [
   { name: "xlarge", width: 2560 },
 ];
 
+interface ImageMeta {
+  id: string;
+  category: string;
+  filename: string;
+  originalWidth: number | undefined;
+  originalHeight: number | undefined;
+  aspectRatio: number;
+  exif: Record<string, unknown>;
+  formats: string[];
+  variants: number[];
+  lqip?: string;
+}
+
 async function ensureDir(dir: string) {
   if (!existsSync(dir)) {
     await mkdir(dir, { recursive: true });
   }
-}
-
-async function processImage(filename: string) {
-  const inputPath = join(SOURCE_DIR, filename);
-  const fileExt = extname(filename);
-  const name = basename(filename, fileExt);
-  
-  // Create category subdirectory in output if implied, but for now flat or mirror source
-  // Assuming source is flat for now based on description, or we handle subdirs?
-  // 1.5.1 says "6 categories". Likely source has subdirs.
-  // The script should probably walk subdirectories.
-  
-  // Let's assume flat for now or implement recursive walk. 
-  // Given task 2.1.2 says "organized by category and size", let's assume source might have folders.
-  // I will check if inputPath is a directory.
 }
 
 async function main() {
@@ -44,7 +42,7 @@ async function main() {
   await ensureDir(DATA_DIR);
 
   let processedCount = 0;
-  const metadata: any[] = [];
+  const metadata: ImageMeta[] = [];
 
   // Recursive walker
   async function walk(dir: string, category: string | null = null) {
@@ -74,7 +72,7 @@ async function main() {
     const metadataRaw = await image.metadata();
 
     // 1. Generate Metadata entry
-    const imageMeta = {
+    const imageMeta: ImageMeta = {
       id: `${category}-${name}`,
       category,
       filename,
@@ -82,13 +80,12 @@ async function main() {
       originalHeight: metadataRaw.height,
       aspectRatio: (metadataRaw.width || 1) / (metadataRaw.height || 1),
       exif: {
-        // Basic placeholder, real extraction would need 'exif-reader' or sharp's metadata
-        // sharp provides some exif data if present
+        // Basic placeholder
       },
       formats: ["avif", "webp", "jpg"],
       variants: VARIANTS.map(v => v.width)
     };
-    metadata.push(imageMeta);
+    
 
     // 2. Generate LQIP
     const lqipBuffer = await image
@@ -96,17 +93,12 @@ async function main() {
       .resize(20)
       .blur(10)
       .toBuffer();
-    // In a real app we might save this to JSON or a file. Plan says src/data/lqip-data.json
-    // But for now let's just output logic. 
-    // Wait, task 2.1.6 says "output base64 data URLs to src/data/lqip-data.json".
-    // I should collect this.
-    (imageMeta as any).lqip = `data:image/${metadataRaw.format};base64,${lqipBuffer.toString('base64')}`;
+    
+    imageMeta.lqip = `data:image/${metadataRaw.format};base64,${lqipBuffer.toString('base64')}`;
+    metadata.push(imageMeta);
 
     // 3. Generate Variants
     for (const variant of VARIANTS) {
-      // Don't upscale if original is smaller? Or just let sharp handle it (it usually upscales).
-      // Strategy says generate all.
-      
       // AVIF
       await image
         .clone()
