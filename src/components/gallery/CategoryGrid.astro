@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import galleryImages from '../../data/gallery-images.json';
+import { getUrl } from '../../utils/url';
 
 const categories = [
   { id: 'portraits', title: 'Portraits' },
@@ -39,7 +40,7 @@ const categoryImages = await Promise.all(categories.map(async (cat) => {
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
     {categoryImages.map((cat, index) => (
       <a 
-        href={`/gallery/${cat.id}`} 
+        href={getUrl(`/gallery/${cat.id}`)} 
         class="category-card group relative aspect-[4/3] overflow-hidden rounded-sm block bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
       >
         <div class="card-content h-full w-full transition-transform duration-200 ease-out will-change-transform">

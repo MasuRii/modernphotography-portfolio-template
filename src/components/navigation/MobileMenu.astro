@@ -1,6 +1,7 @@
 ---
 import { isMenuOpen } from '../../store/nav';
 import ThemeToggle from '../ThemeToggle.astro';
+import { getUrl } from '../../utils/url';
 ---
 
 <div
@@ -8,16 +9,16 @@ import ThemeToggle from '../ThemeToggle.astro';
   class="fixed inset-0 z-30 bg-background transform transition-all duration-300 ease-in-out translate-x-full md:hidden flex flex-col justify-center items-center opacity-0 pointer-events-none"
 >
   <nav class="flex flex-col space-y-8 text-center" aria-label="Mobile Navigation">
-    <a href="/gallery/portraits" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <a href={getUrl("/gallery/portraits")} class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
       Work
     </a>
-    <a href="/about" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <a href={getUrl("/about")} class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
       About
     </a>
-    <a href="/shop" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <a href={getUrl("/shop")} class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
       Shop
     </a>
-    <a href="/contact" class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
+    <a href={getUrl("/contact")} class="mobile-link text-3xl font-serif font-medium text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
       Contact
     </a>
   </nav>

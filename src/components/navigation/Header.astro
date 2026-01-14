@@ -1,5 +1,6 @@
 ---
 import ThemeToggle from '../ThemeToggle.astro';
+import { getUrl } from '../../utils/url';
 ---
 
 <header
@@ -10,27 +11,27 @@ import ThemeToggle from '../ThemeToggle.astro';
     <div class="flex justify-between items-center h-16">
       <!-- Logo -->
       <div class="flex-shrink-0 flex items-center">
-        <a href="/" class="text-2xl font-serif font-bold tracking-tighter text-gray-900 dark:text-white">
+        <a href={getUrl("/")} class="text-2xl font-serif font-bold tracking-tighter text-gray-900 dark:text-white">
           MASURII
         </a>
       </div>
 
       <!-- Desktop Navigation -->
       <nav class="hidden md:flex space-x-8 items-center" aria-label="Main Navigation">
-        <a href="/gallery/portraits" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+        <a href={getUrl("/gallery/portraits")} class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
           Work
         </a>
-        <a href="/about" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+        <a href={getUrl("/about")} class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
           About
         </a>
-        <a href="/shop" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+        <a href={getUrl("/shop")} class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
           Shop
         </a>
-        <a href="/contact" class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
+        <a href={getUrl("/contact")} class="text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors">
           Contact
         </a>
         
-        <a href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
+        <a href={getUrl("/checkout")} class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
@@ -43,7 +44,7 @@ import ThemeToggle from '../ThemeToggle.astro';
 
       <!-- Mobile Menu Button -->
       <div class="flex items-center md:hidden space-x-4">
-        <a href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
+        <a href={getUrl("/checkout")} class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>

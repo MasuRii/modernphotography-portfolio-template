@@ -2,6 +2,7 @@
 import socialLinks from '../../data/social-links.json';
 import branding from '../../data/branding.json';
 import DemoLink from '../demo/DemoLink.astro';
+import { getUrl } from '../../utils/url';
 
 const year = new Date().getFullYear();
 ---
@@ -11,7 +12,7 @@ const year = new Date().getFullYear();
     
     <!-- Brand / Copyright -->
     <div class="space-y-4 md:text-left text-center">
-      <a href="/" class="text-xl font-serif font-bold text-primary tracking-tighter">MASURII</a>
+      <a href={getUrl("/")} class="text-xl font-serif font-bold text-primary tracking-tighter">MASURII</a>
       <div class="text-sm font-light space-y-1">
         <p>&copy; {year} Elena Vashchenko.</p>
         <p>All rights reserved.</p>

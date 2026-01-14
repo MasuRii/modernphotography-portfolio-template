@@ -1,10 +1,11 @@
 ---
 import DemoButton from '../demo/DemoButton.astro';
+import { getUrl } from '../../utils/url';
 ---
 
 <aside class="fixed bottom-6 right-6 z-40 hidden md:block print:hidden">
   <a
-    href="/contact"
+    href={getUrl("/contact")}
     class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
   >
     Hire Me
@@ -14,7 +15,7 @@ import DemoButton from '../demo/DemoButton.astro';
 <!-- Mobile version (optional, maybe integrated into bottom bar if one existed, but floating is fine) -->
 <aside class="fixed bottom-6 right-6 z-40 md:hidden print:hidden">
     <a
-      href="/contact"
+      href={getUrl("/contact")}
       class="inline-flex items-center justify-center p-4 rounded-full text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-900"
       aria-label="Hire Me"
     >
