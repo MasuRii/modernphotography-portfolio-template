@@ -24,13 +24,13 @@ const description = photographer.bio.split('.')[0] + '.';
 
     <!-- Content Section -->
     <div class="relative flex flex-col justify-center px-6 py-20 md:px-12 lg:px-20 xl:px-32 bg-[#0a0a0a] text-neutral-300">
-      <div class="max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up" style="animation-delay: 200ms; animation-fill-mode: forwards;">
-        <h2 class="text-sm font-medium tracking-widest text-neutral-500 uppercase mb-4">{photographer.title}</h2>
-        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-8 tracking-tight">
+      <div class="max-w-2xl mx-auto lg:mx-0">
+        <h2 class="text-sm font-medium tracking-widest text-neutral-500 uppercase mb-4 reveal-on-scroll">{photographer.title}</h2>
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-8 tracking-tight reveal-on-scroll delay-100">
           {photographer.name}
         </h1>
         
-        <div class="space-y-6 text-lg leading-relaxed font-light mb-12">
+        <div class="space-y-6 text-lg leading-relaxed font-light mb-12 reveal-on-scroll delay-200">
           <p>{photographer.bio}</p>
           <blockquote class="border-l-2 border-neutral-700 pl-6 italic text-neutral-400 my-8">
              "{photographer.philosophy}"
@@ -39,7 +39,7 @@ const description = photographer.bio.split('.')[0] + '.';
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
           <!-- Equipment -->
-          <div>
+          <div class="reveal-on-scroll delay-300">
               <h3 class="text-white font-serif text-2xl mb-6">Equipment</h3>
               <ul class="space-y-2 font-light text-neutral-400">
                   {photographer.equipment.map(item => (
@@ -50,7 +50,7 @@ const description = photographer.bio.split('.')[0] + '.';
 
           <div class="space-y-12">
               <!-- Awards -->
-              <div>
+              <div class="reveal-on-scroll delay-400">
                   <h3 class="text-white font-serif text-2xl mb-6">Awards</h3>
                   <ul class="space-y-4">
                       {photographer.awards.map(award => (
@@ -63,7 +63,7 @@ const description = photographer.bio.split('.')[0] + '.';
               </div>
 
               <!-- Publications -->
-              <div>
+              <div class="reveal-on-scroll delay-500">
                   <h3 class="text-white font-serif text-2xl mb-6">Publications</h3>
                   <ul class="space-y-4">
                       {photographer.publications.map(pub => (
@@ -84,18 +84,43 @@ const description = photographer.bio.split('.')[0] + '.';
 </BaseLayout>
 
 <style>
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1s cubic-bezier(0.2, 0.8, 0.2, 1), transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  
+  .reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  .animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out;
-  }
+  .delay-100 { transition-delay: 100ms; }
+  .delay-200 { transition-delay: 200ms; }
+  .delay-300 { transition-delay: 300ms; }
+  .delay-400 { transition-delay: 400ms; }
+  .delay-500 { transition-delay: 500ms; }
 </style>
+
+<script>
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal-on-scroll').forEach((element) => {
+      observer.observe(element);
+    });
+  });
+</script>
