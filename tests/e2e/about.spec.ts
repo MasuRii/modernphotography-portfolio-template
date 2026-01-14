@@ -27,14 +27,14 @@ test.describe("About Page", () => {
   });
 
   test("Renders equipment list", async ({ page }) => {
-    await expect(page.locator("h3", { hasText: "Equipment" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Equipment" })).toBeVisible();
     for (const item of photographer.equipment) {
       await expect(page.locator("li", { hasText: item })).toBeVisible();
     }
   });
 
   test("Renders awards list", async ({ page }) => {
-    await expect(page.locator("h3", { hasText: "Awards" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Awards" })).toBeVisible();
     for (const award of photographer.awards) {
       await expect(page.locator(`text=${award.title}`)).toBeVisible();
       await expect(page.locator(`text=${award.category}`)).toBeVisible();
@@ -42,7 +42,7 @@ test.describe("About Page", () => {
   });
 
   test("Renders publications list", async ({ page }) => {
-    await expect(page.locator("h3", { hasText: "Publications" })).toBeVisible();
+    await expect(page.locator("h2", { hasText: "Publications" })).toBeVisible();
     for (const pub of photographer.publications) {
       await expect(page.locator(`text=${pub.title}`)).toBeVisible();
     }

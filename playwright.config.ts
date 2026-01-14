@@ -1,10 +1,10 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 /**
  * See https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: "./tests/e2e",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -14,61 +14,61 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:4321',
+    baseURL: "http://localhost:4321",
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on-first-retry',
+    trace: "on-first-retry",
   },
 
   /* Configure projects for major browsers and specific viewports */
   projects: [
     /* Desktop 1920px - All Browsers */
     {
-      name: 'chromium-1920',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1920, height: 1080 } },
+      name: "chromium-1920",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1920, height: 1080 } },
     },
     {
-      name: 'firefox-1920',
-      use: { ...devices['Desktop Firefox'], viewport: { width: 1920, height: 1080 } },
+      name: "firefox-1920",
+      use: { ...devices["Desktop Firefox"], viewport: { width: 1920, height: 1080 } },
     },
     {
-      name: 'webkit-1920',
-      use: { ...devices['Desktop Safari'], viewport: { width: 1920, height: 1080 } },
+      name: "webkit-1920",
+      use: { ...devices["Desktop Safari"], viewport: { width: 1920, height: 1080 } },
     },
 
     /* Desktop 1440px */
     {
-      name: 'chromium-1440',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1440, height: 900 } },
+      name: "chromium-1440",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } },
     },
 
     /* Laptop 1024px */
     {
-      name: 'chromium-1024',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1024, height: 768 } },
+      name: "chromium-1024",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1024, height: 768 } },
     },
 
     /* Tablet 768px */
     {
-      name: 'chromium-768',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 768, height: 1024 } },
+      name: "chromium-768",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 768, height: 1024 } },
     },
 
     /* Mobile 375px */
     {
-      name: 'chromium-375',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 375, height: 667 } },
+      name: "chromium-375",
+      use: { ...devices["Desktop Chrome"], viewport: { width: 375, height: 667 } },
     },
   ],
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'bun run dev',
-    url: 'http://localhost:4321',
+    command: process.env.CI ? "bun run preview" : "bun run dev",
+    url: "http://localhost:4321",
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
   },

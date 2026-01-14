@@ -2,15 +2,13 @@
 ---
 
 <button
-  id="theme-toggle"
   type="button"
-  class="rounded-md p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
+  class="theme-toggle-btn rounded-md p-2 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors"
   aria-label="Toggle theme"
 >
   <!-- Sun Icon (for Dark Mode - initially visible if dark) -->
   <svg
-    id="theme-toggle-sun"
-    class="hidden h-5 w-5"
+    class="theme-toggle-sun hidden h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -25,8 +23,7 @@
   </svg>
   <!-- Moon Icon (for Light Mode - initially visible if light) -->
   <svg
-    id="theme-toggle-moon"
-    class="hidden h-5 w-5"
+    class="theme-toggle-moon hidden h-5 w-5"
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -42,28 +39,27 @@
 </button>
 
 <script>
-  const toggleBtn = document.getElementById('theme-toggle');
-  const sunIcon = document.getElementById('theme-toggle-sun');
-  const moonIcon = document.getElementById('theme-toggle-moon');
-
-  function updateIcons() {
-    if (!sunIcon || !moonIcon) return;
+  function updateAllIcons() {
     const isDark = document.documentElement.classList.contains('dark');
-    
-    if (isDark) {
-      sunIcon.classList.remove('hidden');
-      moonIcon.classList.add('hidden');
-    } else {
-      sunIcon.classList.add('hidden');
-      moonIcon.classList.remove('hidden');
-    }
+    document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+      const sun = btn.querySelector('.theme-toggle-sun');
+      const moon = btn.querySelector('.theme-toggle-moon');
+      
+      if (isDark) {
+        sun?.classList.remove('hidden');
+        moon?.classList.add('hidden');
+      } else {
+        sun?.classList.add('hidden');
+        moon?.classList.remove('hidden');
+      }
+    });
   }
 
   // Initial update
-  updateIcons();
+  updateAllIcons();
 
-  if (toggleBtn) {
-    toggleBtn.addEventListener('click', () => {
+  document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
       const html = document.documentElement;
       
       if (html.classList.contains('dark')) {
@@ -73,15 +69,15 @@
         html.classList.add('dark');
         localStorage.setItem('theme', 'dark');
       }
-      updateIcons();
+      updateAllIcons();
     });
-  }
+  });
   
-  // Observer for external changes (optional but robust)
+  // Observer for external changes
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.attributeName === 'class') {
-        updateIcons();
+        updateAllIcons();
       }
     });
   });

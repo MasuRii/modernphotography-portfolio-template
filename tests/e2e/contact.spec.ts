@@ -35,7 +35,7 @@ test.describe("Contact Page", () => {
     await page.selectOption("#service", "Portrait Session");
     await page.fill("#message", "This is a test message.");
 
-    const submitBtn = page.locator('button[type="submit"]');
+    const submitBtn = page.locator('#contact-form button[type="submit"]');
     await submitBtn.click();
 
     // Check loading state
