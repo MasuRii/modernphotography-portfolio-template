@@ -45,13 +45,16 @@
   </button>
 
   <!-- Main Image Container -->
-  <div class="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center pointer-events-none">
-    <img
-      id="lightbox-image"
-      src=""
-      alt=""
-      class="max-w-full max-h-full object-contain shadow-2xl pointer-events-auto select-none"
-    />
+  <div class="relative w-full h-full max-w-[90vw] max-h-[90vh] flex items-center justify-center overflow-hidden">
+    <div id="lightbox-image-wrapper" class="relative w-full h-full flex items-center justify-center overflow-hidden">
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        class="max-w-full max-h-full object-contain shadow-2xl select-none transition-transform duration-200 ease-out cursor-zoom-in touch-none"
+        draggable="false"
+      />
+    </div>
     
     <!-- Caption Overlay -->
     <div
@@ -77,6 +80,109 @@
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
+  const imageWrapper = document.getElementById('lightbox-image-wrapper');
+
+  // Zoom State
+  let isZoomed = false;
+  let currentScale = 1;
+  let translateX = 0;
+  let translateY = 0;
+  let startX = 0;
+  let startY = 0;
+  let isDragging = false;
+  
+  // Touch Zoom State
+  let initialDistance = 0;
+
+  function resetZoom() {
+    isZoomed = false;
+    currentScale = 1;
+    translateX = 0;
+    translateY = 0;
+    updateImageTransform();
+    if (imgElement) {
+        imgElement.style.cursor = 'zoom-in';
+        imgElement.classList.remove('cursor-grab', 'cursor-grabbing');
+    }
+  }
+
+  function updateImageTransform() {
+    if (imgElement) {
+        imgElement.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+    }
+  }
+
+  function toggleZoom(e: MouseEvent | TouchEvent) {
+    if (isZoomed) {
+        resetZoom();
+    } else {
+        isZoomed = true;
+        currentScale = 2.5; // Zoom level
+        
+        // Calculate click position relative to image to zoom towards that point
+        // For simplicity in this iteration, we just zoom to center or clamp later
+        // A simple centered zoom is safer for the first pass
+        
+        if (imgElement) {
+            imgElement.style.cursor = 'zoom-out';
+            imgElement.classList.add('cursor-grab');
+        }
+        updateImageTransform();
+    }
+    e.stopPropagation();
+  }
+
+  function handlePointerDown(e: MouseEvent | TouchEvent) {
+    if (!isZoomed) return;
+    isDragging = true;
+    
+    let clientX = 0;
+    let clientY = 0;
+
+    if ('touches' in e && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else if ('clientX' in e) {
+        clientX = (e as MouseEvent).clientX;
+        clientY = (e as MouseEvent).clientY;
+    } else {
+        return;
+    }
+    
+    startX = clientX - translateX;
+    startY = clientY - translateY;
+    
+    if (imgElement) imgElement.classList.add('cursor-grabbing');
+    if (e.cancelable) e.preventDefault(); // Prevent default drag behavior
+  }
+
+  function handlePointerMove(e: MouseEvent | TouchEvent) {
+    if (!isDragging || !isZoomed) return;
+    
+    let clientX = 0;
+    let clientY = 0;
+
+    if ('touches' in e && e.touches.length > 0) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+    } else if ('clientX' in e) {
+        clientX = (e as MouseEvent).clientX;
+        clientY = (e as MouseEvent).clientY;
+    } else {
+        return;
+    }
+    
+    translateX = clientX - startX;
+    translateY = clientY - startY;
+    
+    updateImageTransform();
+    if (e.cancelable) e.preventDefault();
+  }
+
+  function handlePointerUp() {
+    isDragging = false;
+    if (imgElement) imgElement.classList.remove('cursor-grabbing');
+  }
 
   function updateLightbox() {
     const images = lightboxImages.get();
@@ -84,6 +190,9 @@
     const isOpen = isLightboxOpen.get();
     
     if (isOpen) {
+        // Reset zoom whenever image changes or lightbox opens
+        resetZoom();
+
         lightbox?.classList.remove('opacity-0', 'pointer-events-none');
         lightbox?.focus();
         // Prevent body scroll
@@ -127,6 +236,60 @@
   prevBtn?.addEventListener('click', (e) => { e.stopPropagation(); prevImage(); });
   nextBtn?.addEventListener('click', (e) => { e.stopPropagation(); nextImage(); });
   
+  // Click to toggle zoom
+  imgElement?.addEventListener('click', (e) => {
+    // Only toggle if not dragging (to distinguish click from drag release)
+    if (!isDragging) {
+        toggleZoom(e);
+    }
+  });
+
+  // Dragging for Panning (Mouse + Touch)
+  imgElement?.addEventListener('mousedown', handlePointerDown);
+  window.addEventListener('mousemove', handlePointerMove);
+  window.addEventListener('mouseup', handlePointerUp);
+  
+  imgElement?.addEventListener('touchstart', (e) => {
+    if (e.touches.length === 2 && e.touches[0] && e.touches[1]) {
+        // Prepare for pinch
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        initialDistance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+        return;
+    }
+    handlePointerDown(e);
+  }, { passive: false });
+  
+  window.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 2 && initialDistance > 0 && e.touches[0] && e.touches[1]) {
+        // Pinch Zoom Logic
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const currentDistance = Math.hypot(touch2.clientX - touch1.clientX, touch2.clientY - touch1.clientY);
+        
+        const scaleChange = currentDistance / initialDistance;
+        
+        // Update scale with limits
+        const newScale = currentScale * scaleChange;
+        if (newScale >= 1 && newScale <= 4) {
+             currentScale = newScale;
+             updateImageTransform();
+        }
+        
+        initialDistance = currentDistance; // Reset for continuous delta
+        if (e.cancelable) e.preventDefault();
+        return;
+    }
+    handlePointerMove(e);
+  }, { passive: false });
+  
+  window.addEventListener('touchend', (e) => {
+    handlePointerUp();
+    if (e.touches.length < 2) {
+        initialDistance = 0;
+    }
+  });
+
   // Click outside to close (click on backdrop)
   lightbox?.addEventListener('click', (e) => {
     // Check if click target is the container or the flex spacer
@@ -144,14 +307,14 @@
             closeLightbox(); 
             break;
         case 'ArrowRight': 
-            nextImage(); 
+            if (!isZoomed) nextImage(); // Disable nav when zoomed to avoid conflict with pan
             break;
         case 'ArrowLeft': 
-            prevImage(); 
+            if (!isZoomed) prevImage(); 
             break;
         case ' ':
             e.preventDefault(); 
-            nextImage(); 
+            if (!isZoomed) nextImage(); 
             break;
     }
   });
@@ -161,10 +324,13 @@
   let touchEndX = 0;
   
   lightbox?.addEventListener('touchstart', (e) => {
+      // Don't swipe nav if zoomed
+      if (isZoomed || e.changedTouches.length === 0) return;
       touchStartX = e.changedTouches[0].screenX;
   }, { passive: true });
   
   lightbox?.addEventListener('touchend', (e) => {
+      if (isZoomed || e.changedTouches.length === 0) return;
       touchEndX = e.changedTouches[0].screenX;
       handleSwipe();
   }, { passive: true });
