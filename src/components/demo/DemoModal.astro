@@ -21,7 +21,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
         id="demo-modal-title"
         class="text-xl font-bold text-gray-900 dark:text-white mb-2"
       >
-        Demo Mode
+        This is a Demo Site
       </h2>
       <p
         id="demo-feature-name"
@@ -71,7 +71,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
     if (!backdrop || !modal || !featureEl || !descEl) return;
 
     // Update content
-    featureEl.textContent = feature;
+    featureEl.textContent = `You clicked: ${feature}`;
     descEl.textContent = message;
 
     // Show modal
