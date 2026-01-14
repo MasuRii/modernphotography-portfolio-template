@@ -1,0 +1,74 @@
+---
+import { Image } from 'astro:assets';
+import galleryImages from '../../data/gallery-images.json';
+
+const categories = [
+  { id: 'portraits', title: 'Portraits' },
+  { id: 'landscapes', title: 'Landscapes' },
+  { id: 'street-photography', title: 'Street' },
+  { id: 'events', title: 'Events' },
+  { id: 'editorial', title: 'Editorial' },
+  { id: 'architecture', title: 'Architecture' },
+];
+
+// Get one image for each category (first one found)
+const images = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/gallery/*.{jpeg,jpg,png,gif}');
+
+const categoryImages = await Promise.all(categories.map(async (cat) => {
+  // Find the first image in this category that actually exists on disk
+  const catImages = galleryImages.filter(img => img.category === cat.id);
+  
+  let imageMetadata: ImageMetadata | null = null;
+  
+  for (const item of catImages) {
+    const path = `/src/assets/images/gallery/${item.id}.jpg`;
+    if (images[path]) {
+      imageMetadata = (await images[path]()).default;
+      break; // Found one
+    }
+  }
+  
+  return {
+    ...cat,
+    image: imageMetadata
+  };
+}));
+---
+
+<section class="container mx-auto px-4 py-16" aria-label="Gallery Categories">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+    {categoryImages.map((cat, index) => (
+      <a 
+        href={`/gallery/${cat.id}`} 
+        class="group relative aspect-[4/3] overflow-hidden rounded-sm block bg-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+      >
+        {cat.image ? (
+          <Image 
+            src={cat.image}
+            alt={`${cat.title} Gallery`}
+            width={800}
+            height={600}
+            class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+          />
+        ) : (
+             <div class="h-full w-full flex items-center justify-center bg-neutral-800 text-neutral-600">
+               <span class="sr-only">No image available for {cat.title}</span>
+               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 opacity-50">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+               </svg>
+             </div>
+        )}
+        
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />
+        
+        <!-- Text -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <h3 class="text-3xl font-serif text-white tracking-wide opacity-90 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500 drop-shadow-lg">
+            {cat.title}
+          </h3>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
