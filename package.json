@@ -34,6 +34,7 @@
   },
   "dependencies": {
     "astro": "^5.16.9",
+    "nanostores": "^1.1.0",
     "sharp": "^0.34.5"
   }
 }
