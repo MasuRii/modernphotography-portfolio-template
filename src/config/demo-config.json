@@ -1,0 +1,59 @@
+{
+  "enabled": true,
+  "intercepts": [
+    {
+      "id": "social-instagram",
+      "pattern": "instagram.com",
+      "feature": "Instagram Profile",
+      "message": "In a production site, this link would take you to the photographer's Instagram profile."
+    },
+    {
+      "id": "social-twitter",
+      "pattern": "twitter.com",
+      "feature": "Twitter/X Profile",
+      "message": "In a production site, this link would take you to the photographer's Twitter/X profile."
+    },
+    {
+      "id": "social-linkedin",
+      "pattern": "linkedin.com",
+      "feature": "LinkedIn Profile",
+      "message": "In a production site, this link would take you to the photographer's LinkedIn profile."
+    },
+    {
+      "id": "social-behance",
+      "pattern": "behance.net",
+      "feature": "Behance Profile",
+      "message": "In a production site, this link would take you to the photographer's Behance profile."
+    },
+    {
+      "id": "social-500px",
+      "pattern": "500px.com",
+      "feature": "500px Profile",
+      "message": "In a production site, this link would take you to the photographer's 500px profile."
+    },
+    {
+      "id": "shop-checkout",
+      "pattern": "/checkout",
+      "feature": "Shop Checkout",
+      "message": "This is a demo store. No payment processing is connected, and no goods will be shipped."
+    },
+    {
+      "id": "service-booking",
+      "pattern": "/booking",
+      "feature": "Booking System",
+      "message": "This would connect to a scheduling service (e.g., Calendly) to book sessions."
+    },
+    {
+      "id": "service-client-portal",
+      "pattern": "/portal",
+      "feature": "Client Portal",
+      "message": "This would link to a secure gallery delivery area (e.g., Pixieset, Pic-Time)."
+    },
+    {
+      "id": "newsletter",
+      "pattern": "/newsletter",
+      "feature": "Newsletter Signup",
+      "message": "Success! (Demo Mode: No email was actually added to a list)."
+    }
+  ]
+}
