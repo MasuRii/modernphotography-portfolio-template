@@ -1,0 +1,32 @@
+[
+  {
+    "platform": "Instagram",
+    "url": "https://instagram.com/elenav_photo",
+    "icon": "instagram",
+    "label": "Follow on Instagram"
+  },
+  {
+    "platform": "Twitter / X",
+    "url": "https://x.com/elenav_photo",
+    "icon": "twitter",
+    "label": "Follow on X"
+  },
+  {
+    "platform": "LinkedIn",
+    "url": "https://linkedin.com/in/elenav_photo",
+    "icon": "linkedin",
+    "label": "Connect on LinkedIn"
+  },
+  {
+    "platform": "Behance",
+    "url": "https://behance.net/elenav_photo",
+    "icon": "behance",
+    "label": "View Portfolio on Behance"
+  },
+  {
+    "platform": "500px",
+    "url": "https://500px.com/elenav_photo",
+    "icon": "500px",
+    "label": "View on 500px"
+  }
+]
