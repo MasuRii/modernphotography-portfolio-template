@@ -246,6 +246,41 @@ const validSlides = slides.filter((s): s is NonNullable<typeof s> => s !== null)
     }
   });
 
+  // Touch/Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  container?.addEventListener('touchstart', (e) => {
+    const touchEvent = e as TouchEvent;
+    if (touchEvent.changedTouches && touchEvent.changedTouches.length > 0) {
+      const touch = touchEvent.changedTouches[0];
+      if (touch) touchStartX = touch.screenX;
+    }
+  }, { passive: true });
+
+  container?.addEventListener('touchend', (e) => {
+    const touchEvent = e as TouchEvent;
+    if (touchEvent.changedTouches && touchEvent.changedTouches.length > 0) {
+      const touch = touchEvent.changedTouches[0];
+      if (touch) {
+        touchEndX = touch.screenX;
+        handleSwipe();
+      }
+    }
+  }, { passive: true });
+
+  function handleSwipe() {
+    const threshold = 50;
+    if (touchEndX < touchStartX - threshold) {
+      nextSlide(); // Swipe Left -> Next
+      startTimer();
+    }
+    if (touchEndX > touchStartX + threshold) {
+      prevSlide(); // Swipe Right -> Prev
+      startTimer();
+    }
+  }
+
   if (totalSlides > 0) {
     startTimer();
   }
