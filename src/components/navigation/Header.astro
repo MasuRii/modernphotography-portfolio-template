@@ -1,6 +1,5 @@
 ---
 import ThemeToggle from '../ThemeToggle.astro';
-import DemoLink from '../demo/DemoLink.astro';
 ---
 
 <header
@@ -31,11 +30,11 @@ import DemoLink from '../demo/DemoLink.astro';
           Contact
         </a>
         
-        <DemoLink href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
+        <a href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-        </DemoLink>
+        </a>
 
         <div class="border-l border-gray-200 dark:border-gray-700 pl-6 ml-2">
           <ThemeToggle />
@@ -44,11 +43,11 @@ import DemoLink from '../demo/DemoLink.astro';
 
       <!-- Mobile Menu Button -->
       <div class="flex items-center md:hidden space-x-4">
-        <DemoLink href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
+        <a href="/checkout" class="text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors" aria-label="Cart">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
-        </DemoLink>
+        </a>
         <ThemeToggle />
         <button
           id="mobile-menu-btn"

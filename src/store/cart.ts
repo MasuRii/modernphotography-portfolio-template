@@ -18,8 +18,35 @@ export interface CartModalState {
   price: number;
 }
 
+const CART_STORAGE_KEY = "photography-cart";
+
+// Helper to safely access localStorage
+function getStoredCart(): Record<string, CartItem> {
+  if (typeof window === "undefined") return {};
+  try {
+    const stored = localStorage.getItem(CART_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveCartToStorage(items: Record<string, CartItem>) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    // Storage might be full or unavailable
+  }
+}
+
 export const isCartOpen = atom(false); // For Cart drawer visibility
-export const cartItems = map<Record<string, CartItem>>({});
+export const cartItems = map<Record<string, CartItem>>(getStoredCart());
+
+// Subscribe to changes and persist to localStorage
+cartItems.subscribe((items) => {
+  saveCartToStorage(items);
+});
 
 // Cart modal state
 export const cartModalState = map<CartModalState>({
@@ -82,6 +109,18 @@ export function removeCartItem(id: string) {
   cartItems.set(items);
 }
 
+export function clearCart() {
+  cartItems.set({});
+}
+
 export function toggleCart() {
   isCartOpen.set(!isCartOpen.get());
+}
+
+// Initialize cart from storage on page load
+export function initCart() {
+  const stored = getStoredCart();
+  if (Object.keys(stored).length > 0) {
+    cartItems.set(stored);
+  }
 }

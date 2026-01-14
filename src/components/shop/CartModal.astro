@@ -63,7 +63,6 @@
 
 <script>
   import { cartModalState, closeCartModal } from '../../store/cart';
-  import { openDemoModal } from '../../store/demo';
 
   const backdrop = document.getElementById('cart-modal-backdrop');
   const modal = document.getElementById('cart-modal');
@@ -145,8 +144,8 @@
 
   checkoutBtn?.addEventListener('click', () => {
     closeCartModal();
-    // Open the demo modal for checkout
-    openDemoModal('Shop Checkout', 'This is a demo store. No payment processing is connected, and no goods will be shipped.');
+    // Navigate to checkout page
+    window.location.href = '/checkout';
   });
 
   backdrop?.addEventListener('click', (e) => {

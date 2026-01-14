@@ -37,12 +37,7 @@
       "feature": "500px Profile",
       "message": "In a production site, this link would take you to the photographer's 500px profile."
     },
-    {
-      "id": "shop-checkout",
-      "pattern": "/checkout",
-      "feature": "Shop Checkout",
-      "message": "This is a demo store. No payment processing is connected, and no goods will be shipped."
-    },
+
     {
       "id": "service-booking",
       "pattern": "/booking",

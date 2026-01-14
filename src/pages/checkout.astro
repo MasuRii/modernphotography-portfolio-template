@@ -1,0 +1,205 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = "Checkout | Modern Photography Portfolio";
+const description = "Complete your order for fine art prints.";
+---
+
+<BaseLayout title={title} description={description}>
+  <section class="min-h-screen pt-32 pb-20 px-6 md:px-12 lg:px-20 bg-background text-secondary transition-colors duration-300">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="mb-12">
+        <a 
+          href="/shop" 
+          class="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors mb-6 group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Back to Shop
+        </a>
+        
+        <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-primary mb-6 tracking-tight">
+          Your Cart
+        </h1>
+
+        <div class="inline-block bg-amber-100 dark:bg-amber-900/30 border border-amber-300 dark:border-amber-800/50 rounded-lg px-4 py-2">
+          <p class="text-amber-800 dark:text-amber-200 text-sm font-medium flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+            </svg>
+            Demo Checkout — Purchases are simulated and not processed.
+          </p>
+        </div>
+      </div>
+
+      <!-- Cart Content -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+        <!-- Cart Items Section -->
+        <div class="lg:col-span-2 space-y-6">
+          <!-- Empty Cart Message -->
+          <div id="empty-cart" class="hidden text-center py-16 px-8 bg-surface rounded-lg border border-border">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-secondary/40 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <h2 class="text-xl font-serif text-primary mb-2">Your cart is empty</h2>
+            <p class="text-secondary mb-6">Explore our collection of fine art prints.</p>
+            <a 
+              href="/shop" 
+              class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-md hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+            >
+              Browse Prints
+            </a>
+          </div>
+
+          <!-- Cart Items Container -->
+          <div id="cart-items" class="space-y-4">
+            <!-- Items will be dynamically rendered here -->
+          </div>
+        </div>
+
+        <!-- Order Summary Section -->
+        <div class="lg:col-span-1">
+          <div id="order-summary" class="bg-surface rounded-lg border border-border p-6 sticky top-24">
+            <h2 class="font-serif text-xl text-primary mb-6 pb-4 border-b border-border">Order Summary</h2>
+            
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-secondary">
+                <span>Subtotal</span>
+                <span id="subtotal">$0</span>
+              </div>
+              <div class="flex justify-between text-secondary">
+                <span>Shipping</span>
+                <span id="shipping">Free</span>
+              </div>
+              <div class="flex justify-between text-secondary">
+                <span>Tax (estimate)</span>
+                <span id="tax">$0</span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between text-primary font-medium text-lg pt-4 border-t border-border mb-6">
+              <span>Total</span>
+              <span id="total">$0</span>
+            </div>
+
+            <button
+              id="checkout-btn"
+              class="w-full bg-primary text-background font-medium py-4 rounded-md hover:opacity-90 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled
+            >
+              Proceed to Payment
+            </button>
+
+            <p class="text-center text-xs text-secondary mt-4">
+              Secure checkout powered by demo mode
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { cartItems, removeCartItem, cartTotal, initCart } from '../store/cart';
+  import { openDemoModal } from '../store/demo';
+
+  // Initialize cart from localStorage
+  initCart();
+
+  const cartItemsContainer = document.getElementById('cart-items');
+  const emptyCartMessage = document.getElementById('empty-cart');
+  const orderSummary = document.getElementById('order-summary');
+  const subtotalEl = document.getElementById('subtotal');
+  const taxEl = document.getElementById('tax');
+  const totalEl = document.getElementById('total');
+  const checkoutBtn = document.getElementById('checkout-btn') as HTMLButtonElement;
+
+  function formatPrice(price: number): string {
+    return `$${price.toFixed(0)}`;
+  }
+
+  function renderCartItem(item: { id: string; title: string; size: string; frame: string; price: number; quantity: number }) {
+    return `
+      <div class="cart-item flex gap-4 p-4 bg-surface rounded-lg border border-border" data-id="${item.id}">
+        <div class="flex-1">
+          <h3 class="font-medium text-primary mb-1">${item.title}</h3>
+          <p class="text-sm text-secondary mb-2">${item.size} • ${item.frame}</p>
+          <div class="flex items-center gap-4">
+            <span class="text-primary font-medium">${formatPrice(item.price)}</span>
+            <span class="text-secondary text-sm">Qty: ${item.quantity}</span>
+          </div>
+        </div>
+        <button 
+          class="remove-item-btn self-start p-2 text-secondary hover:text-red-500 dark:hover:text-red-400 transition-colors rounded-md hover:bg-red-50 dark:hover:bg-red-900/20"
+          aria-label="Remove ${item.title} from cart"
+          data-id="${item.id}"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </button>
+      </div>
+    `;
+  }
+
+  function updateOrderSummary(total: number) {
+    const tax = total * 0.08; // 8% tax estimate
+    const finalTotal = total + tax;
+    
+    if (subtotalEl) subtotalEl.textContent = formatPrice(total);
+    if (taxEl) taxEl.textContent = formatPrice(tax);
+    if (totalEl) totalEl.textContent = formatPrice(finalTotal);
+    
+    if (checkoutBtn) {
+      checkoutBtn.disabled = total === 0;
+    }
+  }
+
+  function renderCart() {
+    const items = cartItems.get();
+    const itemsList = Object.values(items);
+    
+    if (!cartItemsContainer || !emptyCartMessage) return;
+
+    if (itemsList.length === 0) {
+      cartItemsContainer.innerHTML = '';
+      emptyCartMessage.classList.remove('hidden');
+      updateOrderSummary(0);
+    } else {
+      emptyCartMessage.classList.add('hidden');
+      cartItemsContainer.innerHTML = itemsList.map(renderCartItem).join('');
+      
+      // Add event listeners to remove buttons
+      cartItemsContainer.querySelectorAll('.remove-item-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = (btn as HTMLElement).dataset.id;
+          if (id) {
+            removeCartItem(id);
+          }
+        });
+      });
+      
+      const total = cartTotal.get();
+      updateOrderSummary(total);
+    }
+  }
+
+  // Subscribe to cart changes
+  cartItems.subscribe(() => {
+    renderCart();
+  });
+
+  // Initial render
+  renderCart();
+
+  // Checkout button handler
+  checkoutBtn?.addEventListener('click', () => {
+    openDemoModal(
+      'Payment Processing', 
+      'This is a demo store. In a real implementation, you would be redirected to a secure payment processor like Stripe or PayPal to complete your purchase.'
+    );
+  });
+</script>
