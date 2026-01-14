@@ -2,9 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
 import portraitImage from '../assets/images/gallery/portraits-1.jpg';
+import photographer from '../data/photographer.json';
 
-const title = "About Me";
-const description = "Professional photographer based in New York City, specializing in portrait, editorial, and commercial photography.";
+const title = `About ${photographer.name}`;
+const description = photographer.bio.split('.')[0] + '.';
 ---
 
 <BaseLayout title={`${title} | Modern Photography Portfolio`} description={description}>
@@ -22,19 +23,60 @@ const description = "Professional photographer based in New York City, specializ
     </div>
 
     <!-- Content Section -->
-    <div class="relative flex flex-col justify-center px-6 py-20 md:px-12 lg:px-20 xl:px-32 bg-[#0a0a0a]">
+    <div class="relative flex flex-col justify-center px-6 py-20 md:px-12 lg:px-20 xl:px-32 bg-[#0a0a0a] text-neutral-300">
       <div class="max-w-2xl mx-auto lg:mx-0 opacity-0 animate-fade-in-up" style="animation-delay: 200ms; animation-fill-mode: forwards;">
+        <h2 class="text-sm font-medium tracking-widest text-neutral-500 uppercase mb-4">{photographer.title}</h2>
         <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl text-white mb-8 tracking-tight">
-          Capturing <span class="text-neutral-500 italic">soul</span> <br/> in every frame.
+          {photographer.name}
         </h1>
         
-        <div class="space-y-6 text-neutral-400 text-lg leading-relaxed font-light">
-          <p>
-            This is the about page structure. The actual bio content will be populated in the next step from the data source.
-          </p>
-          <p>
-            The layout uses a split design with a full-height portrait on large screens and a stacked layout on mobile devices, ensuring the image remains prominent.
-          </p>
+        <div class="space-y-6 text-lg leading-relaxed font-light mb-12">
+          <p>{photographer.bio}</p>
+          <blockquote class="border-l-2 border-neutral-700 pl-6 italic text-neutral-400 my-8">
+             "{photographer.philosophy}"
+          </blockquote>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <!-- Equipment -->
+          <div>
+              <h3 class="text-white font-serif text-2xl mb-6">Equipment</h3>
+              <ul class="space-y-2 font-light text-neutral-400">
+                  {photographer.equipment.map(item => (
+                      <li>{item}</li>
+                  ))}
+              </ul>
+          </div>
+
+          <div class="space-y-12">
+              <!-- Awards -->
+              <div>
+                  <h3 class="text-white font-serif text-2xl mb-6">Awards</h3>
+                  <ul class="space-y-4">
+                      {photographer.awards.map(award => (
+                          <li>
+                              <div class="text-white font-medium">{award.title}</div>
+                              <div class="text-sm text-neutral-500">{award.category} • {award.year}</div>
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+
+              <!-- Publications -->
+              <div>
+                  <h3 class="text-white font-serif text-2xl mb-6">Publications</h3>
+                  <ul class="space-y-4">
+                      {photographer.publications.map(pub => (
+                          <li>
+                              <a href={pub.url} target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between border-b border-neutral-800 pb-2 hover:border-white transition-colors">
+                                  <span class="text-neutral-400 group-hover:text-white transition-colors">{pub.title}</span>
+                                  <span class="text-xs text-neutral-600">{pub.date}</span>
+                              </a>
+                          </li>
+                      ))}
+                  </ul>
+              </div>
+          </div>
         </div>
       </div>
     </div>
