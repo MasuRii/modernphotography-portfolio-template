@@ -1,0 +1,33 @@
+---
+import DemoBanner from '../components/demo/DemoBanner.astro';
+import DemoModal from '../components/demo/DemoModal.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Modern Photography Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-[#0a0a0a] text-gray-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white">
+    <DemoBanner />
+    
+    <main class="relative z-10">
+      <slot />
+    </main>
+
+    <DemoModal />
+  </body>
+</html>
