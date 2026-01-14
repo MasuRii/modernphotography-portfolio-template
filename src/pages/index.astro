@@ -1,5 +1,7 @@
 ---
-
+import DemoModal from '../components/demo/DemoModal.astro';
+import DemoBanner from '../components/demo/DemoBanner.astro';
+import DemoLink from '../components/demo/DemoLink.astro';
 ---
 
 <html lang="en">
@@ -9,6 +11,11 @@
     <title>Modern Photography Portfolio</title>
   </head>
   <body>
+    <DemoBanner />
     <h1>Astro Setup Complete</h1>
+    <nav>
+      <DemoLink href="https://instagram.com/masurii">Instagram</DemoLink>
+    </nav>
+    <DemoModal />
   </body>
 </html>
