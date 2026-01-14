@@ -54,9 +54,27 @@ const masonryImages = categoryImages
     };
   })
   .filter((img) => img !== null) as GalleryImage[];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ImageGallery",
+  "name": `${categoryTitle} Portfolio`,
+  "description": `View my ${category} photography portfolio.`,
+  "url": new URL(Astro.url.pathname, Astro.site || 'http://localhost:4321').href,
+  "image": masonryImages.slice(0, 10).map(img => ({
+      "@type": "ImageObject",
+      "contentUrl": new URL(img.src.src, Astro.site || 'http://localhost:4321').href,
+      "name": img.title,
+      "description": img.caption,
+      "thumbnail": img.lqip
+  }))
+};
+
+const ogImage = masonryImages.length > 0 ? masonryImages[0].src.src : undefined;
 ---
 
-<BaseLayout title={`${categoryTitle} Portfolio`} description={`View my ${category} photography portfolio.`}>
+<BaseLayout title={`${categoryTitle} Portfolio`} description={`View my ${category} photography portfolio.`} image={ogImage}>
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} slot="head" />
   <div class="pt-32 pb-20 px-4 md:px-8 bg-neutral-900 min-h-screen">
     <div class="max-w-7xl mx-auto">
       {/* Header */}

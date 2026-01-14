@@ -75,6 +75,7 @@ const socialImageURL = new URL(image, Astro.url);
     <meta property="twitter:image" content={socialImageURL} />
 
     <title>{title}</title>
+    <slot name="head" />
     <script is:inline>
       // Theme Initialization
       (function() {
