@@ -1,0 +1,18 @@
+{
+  "nav": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "about": "About",
+    "contact": "Contact",
+    "shop": "Print Shop"
+  },
+  "common": {
+    "hireMe": "Hire Me",
+    "viewProject": "View Project",
+    "copyright": "All rights reserved"
+  },
+  "demo": {
+    "banner": "You're viewing a demo portfolio. Some features are simulated.",
+    "dismiss": "Got it"
+  }
+}
