@@ -1,9 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import galleryImages from '../../data/gallery-images.json';
+import lqipDataRaw from '../../data/lqip-data.json';
 import MasonryGrid from '../../components/gallery/MasonryGrid.astro';
 import type { GalleryImage } from '../../components/gallery/MasonryGrid.astro';
 import type { ImageMetadata } from 'astro';
+
+const lqipData = lqipDataRaw as Record<string, string>;
 
 export async function getStaticPaths() {
   const categories = [...new Set(galleryImages.map((img) => img.category))];
@@ -46,6 +49,7 @@ const masonryImages = categoryImages
       category: img.category,
       caption: img.caption,
       src: resolved,
+      lqip: lqipData[img.id],
     };
   })
   .filter((img) => img !== null) as GalleryImage[];

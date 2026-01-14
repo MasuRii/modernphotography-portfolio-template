@@ -8,6 +8,7 @@ export interface GalleryImage {
   category: string;
   src: ImageMetadata;
   caption?: string;
+  lqip?: string;
 }
 
 interface Props {
@@ -20,19 +21,27 @@ const { images } = Astro.props;
 <div class="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
   {images.map((image, index) => (
     <div 
-      class="break-inside-avoid relative group cursor-pointer masonry-item mb-8"
+      class="break-inside-avoid relative group cursor-pointer masonry-item mb-8 opacity-0 translate-y-8 transition-all duration-700 ease-out"
       data-index={index}
       data-src={image.src.src}
       data-title={image.title}
       data-category={image.category}
       data-caption={image.caption}
     >
-      <div class="overflow-hidden rounded-sm bg-neutral-800">
+      <div class="overflow-hidden rounded-sm bg-neutral-800 relative">
+        {image.lqip && (
+          <img 
+            src={image.lqip}
+            alt=""
+            class="absolute inset-0 w-full h-full object-cover blur-xl scale-110 lqip-image transition-opacity duration-700 pointer-events-none"
+            aria-hidden="true"
+          />
+        )}
         <Image
           src={image.src}
           alt={image.title}
           width={800}
-          class="w-full h-auto transition-transform duration-700 group-hover:scale-105"
+          class="w-full h-auto transition-transform duration-700 group-hover:scale-105 opacity-0 transition-opacity duration-700 main-image"
         />
       </div>
       
@@ -72,5 +81,47 @@ const { images } = Astro.props;
       const index = Number((item as HTMLElement).dataset.index);
       openLightbox(images, index);
     });
+  });
+
+  // Intersection Observer for Staggered Fade-in
+  const observerOptions = {
+    root: null,
+    rootMargin: '50px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Add a small delay based on column index if possible, or just let natural timing work.
+        // We'll just remove opacity/translate immediately when in view.
+        entry.target.classList.remove('opacity-0', 'translate-y-8');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  items.forEach((item) => observer.observe(item));
+
+  // Image Load Handling for Blur-Up
+  const mainImages = document.querySelectorAll('.main-image');
+  
+  mainImages.forEach((imgElement) => {
+    const img = imgElement as HTMLImageElement;
+    
+    const handleLoad = () => {
+      img.classList.remove('opacity-0');
+      // Find sibling lqip and hide it
+      const lqip = img.parentElement?.querySelector('.lqip-image');
+      if (lqip) {
+        lqip.classList.add('opacity-0');
+      }
+    };
+
+    if (img.complete) {
+      handleLoad();
+    } else {
+      img.addEventListener('load', handleLoad);
+    }
   });
 </script>
