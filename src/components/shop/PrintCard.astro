@@ -68,21 +68,43 @@ const frames = [
 </article>
 
 <script>
+  import { addCartItem } from '../../store/cart';
+
   // Handle price updates
   document.querySelectorAll('.print-card').forEach(card => {
     const sizeSelect = card.querySelector('.size-select') as HTMLSelectElement;
     const frameSelect = card.querySelector('.frame-select') as HTMLSelectElement;
     const priceDisplay = card.querySelector('.price-display') as HTMLElement;
+    const addToCartBtn = card.querySelector('.add-to-cart-btn');
     const basePrice = parseFloat(priceDisplay.dataset.basePrice || '0');
+    const title = card.querySelector('h2')?.textContent || 'Print';
 
-    function updatePrice() {
+    function getPrice() {
       const multiplier = parseFloat(sizeSelect.value);
       const framePrice = parseFloat(frameSelect.value);
-      const finalPrice = (basePrice * multiplier) + framePrice;
+      return (basePrice * multiplier) + framePrice;
+    }
+
+    function updatePrice() {
+      const finalPrice = getPrice();
       priceDisplay.textContent = `$${finalPrice.toFixed(0)}`;
     }
 
     sizeSelect.addEventListener('change', updatePrice);
     frameSelect.addEventListener('change', updatePrice);
+
+    addToCartBtn?.addEventListener('click', () => {
+        const sizeLabel = sizeSelect.options[sizeSelect.selectedIndex].text;
+        const frameLabel = frameSelect.options[frameSelect.selectedIndex].text;
+        const price = getPrice();
+
+        addCartItem({
+            productId: title.toLowerCase().replace(/\s+/g, '-'),
+            title: title,
+            size: sizeLabel,
+            frame: frameLabel,
+            price: price
+        });
+    });
   });
 </script>
