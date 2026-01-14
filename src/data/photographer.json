@@ -1,0 +1,47 @@
+{
+  "name": "Elena Vashchenko",
+  "title": "Visual Storyteller",
+  "bio": "Elena Vashchenko is a contemporary photographer based in Tokyo, known for her cinematic approach to street and portrait photography. With a background in film direction, she treats every frame as a scene from a movie that was never made. Her work explores the silent dialogue between urban architecture and the human condition.",
+  "philosophy": "I believe that photography is not about capturing reality, but about creating a new one. It's an act of subtraction—removing the noise to reveal the essence of a moment. In a world screaming for attention, I look for the whispers.",
+  "equipment": [
+    "Sony A7RV",
+    "Leica Q3",
+    "35mm f/1.4 GM",
+    "85mm f/1.2 DG DN",
+    "Profoto B10X Plus"
+  ],
+  "awards": [
+    {
+      "year": "2025",
+      "title": "Sony World Photography Awards",
+      "category": "Street Photography - Shortlist"
+    },
+    {
+      "year": "2024",
+      "title": "LensCulture Portrait Awards",
+      "category": "Finalist"
+    },
+    {
+      "year": "2023",
+      "title": "International Photography Awards (IPA)",
+      "category": "Architecture - Honorable Mention"
+    }
+  ],
+  "publications": [
+    {
+      "title": "Kinfolk Magazine",
+      "date": "November 2025",
+      "url": "https://kinfolk.com"
+    },
+    {
+      "title": "Aesthetica Magazine",
+      "date": "August 2024",
+      "url": "https://aestheticamagazine.com"
+    },
+    {
+      "title": "Cereal",
+      "date": "March 2024",
+      "url": "https://readcereal.com"
+    }
+  ]
+}
