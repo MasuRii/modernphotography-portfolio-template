@@ -1,21 +1,51 @@
 ---
-import DemoModal from '../components/demo/DemoModal.astro';
-import DemoBanner from '../components/demo/DemoBanner.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import DemoLink from '../components/demo/DemoLink.astro';
+import DemoButton from '../components/demo/DemoButton.astro';
+import DemoSuccessMessage from '../components/demo/DemoSuccessMessage.astro';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>Modern Photography Portfolio</title>
-  </head>
-  <body>
-    <DemoBanner />
-    <h1>Astro Setup Complete</h1>
-    <nav>
-      <DemoLink href="https://instagram.com/masurii">Instagram</DemoLink>
-    </nav>
-    <DemoModal />
-  </body>
-</html>
+<BaseLayout title="Modern Photography Portfolio">
+  <h1>Astro Setup Complete</h1>
+  <nav>
+    <DemoLink href="https://instagram.com/masurii">Instagram</DemoLink>
+    <a href="/about" id="internal-link">About</a>
+  </nav>
+  
+  <DemoButton feature="Checkout" class="btn-checkout">Checkout</DemoButton>
+
+  <form id="newsletter-form" class="mt-4">
+    <input type="email" required placeholder="Email" />
+    <button type="submit">Subscribe</button>
+  </form>
+  <DemoSuccessMessage id="newsletter-success" />
+
+  <script>
+    import { handleDemoFormSubmit } from '../utils/demo-form-handler';
+
+    const form = document.getElementById('newsletter-form') as HTMLFormElement;
+    const successMsg = document.getElementById('newsletter-success');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        const handled = await handleDemoFormSubmit(e, 
+          (loading) => {
+            const btn = form.querySelector('button');
+            if (btn) btn.disabled = loading;
+          },
+          (msg) => {
+            if (successMsg) {
+               successMsg.classList.remove('hidden');
+               successMsg.querySelector('p')!.textContent = msg;
+            }
+          }
+        );
+        
+        if (!handled) {
+          // Real submission logic would go here
+          console.log('Real submission');
+        }
+      });
+    }
+  </script>
+</BaseLayout>

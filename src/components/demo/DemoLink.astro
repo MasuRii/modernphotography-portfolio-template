@@ -1,0 +1,36 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'a'> {
+  href: string;
+}
+
+const { href, class: className, ...props } = Astro.props;
+---
+
+<a href={href} class={className} {...props} data-demo-link>
+  <slot />
+</a>
+
+<script>
+  import { openDemoModal } from '../../store/demo';
+  import { shouldIntercept } from '../../utils/demo-interceptor';
+
+  const links = document.querySelectorAll('a[data-demo-link]');
+
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const anchor = e.currentTarget as HTMLAnchorElement;
+      const href = anchor.getAttribute('href');
+
+      if (!href) return;
+
+      const check = shouldIntercept(href);
+
+      if (check.intercepted) {
+        e.preventDefault();
+        openDemoModal(check.feature || 'External Link', check.message || 'This link is intercepted in demo mode.');
+      }
+    });
+  });
+</script>

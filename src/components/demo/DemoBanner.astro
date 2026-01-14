@@ -1,0 +1,87 @@
+---
+---
+
+<div
+  id="demo-banner"
+  class="fixed top-0 left-0 w-full z-[60] bg-indigo-600 text-white px-4 py-3 shadow-md transform transition-transform duration-300 -translate-y-full"
+  role="alert"
+  aria-hidden="true"
+>
+  <div class="max-w-7xl mx-auto flex items-center justify-center relative">
+    <p class="text-sm font-medium pr-8">
+      You're viewing a demo portfolio. Some features are simulated.
+    </p>
+    <button
+      id="demo-banner-dismiss"
+      type="button"
+      class="absolute right-0 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white transition-colors"
+      aria-label="Dismiss demo banner"
+    >
+      <svg
+        class="h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  import { isDemoMode } from '../../store/demo';
+
+  const banner = document.getElementById('demo-banner');
+  const dismissBtn = document.getElementById('demo-banner-dismiss');
+  const STORAGE_KEY = 'demo_banner_dismissed';
+
+  function showBanner() {
+    if (!banner) return;
+    // Check localStorage
+    if (localStorage.getItem(STORAGE_KEY) === 'true') {
+      return;
+    }
+    
+    // Show
+    banner.classList.remove('-translate-y-full');
+    banner.setAttribute('aria-hidden', 'false');
+    
+    // Push body down (optional, depending on layout strategy)
+    // document.body.style.paddingTop = banner.offsetHeight + 'px';
+  }
+
+  function hideBanner() {
+    if (!banner) return;
+    banner.classList.add('-translate-y-full');
+    banner.setAttribute('aria-hidden', 'true');
+    
+    // Reset body padding
+    // document.body.style.paddingTop = '';
+  }
+
+  // Initialize
+  // Check global demo mode state
+  const demoEnabled = isDemoMode.get();
+  if (demoEnabled) {
+    // We need to wait for DOM to be ready to measure height if we push body
+    // For now, just show it
+    // Use requestAnimationFrame to ensure transition works after load
+    requestAnimationFrame(() => {
+        showBanner();
+    });
+  }
+
+  // Dismiss logic
+  dismissBtn?.addEventListener('click', () => {
+    hideBanner();
+    localStorage.setItem(STORAGE_KEY, 'true');
+  });
+</script>

@@ -1,0 +1,43 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+interface Props extends HTMLAttributes<'button'> {
+  feature: string;
+  demoMessage?: string;
+}
+
+const { feature, demoMessage, class: className, ...props } = Astro.props;
+---
+
+<button
+  type="button"
+  class={className}
+  {...props}
+  data-demo-button
+  data-feature={feature}
+  data-message={demoMessage}
+>
+  <slot />
+</button>
+
+<script>
+  import { openDemoModal, isDemoMode } from '../../store/demo';
+
+  const buttons = document.querySelectorAll('button[data-demo-button]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      // Check if demo mode is active
+      if (!isDemoMode.get()) return;
+
+      e.preventDefault();
+      e.stopImmediatePropagation(); // Prevent other handlers
+
+      const button = e.currentTarget as HTMLButtonElement;
+      const feature = button.dataset.feature || 'Feature';
+      const message = button.dataset.message || 'This feature is simulated in demo mode.';
+
+      openDemoModal(feature, message);
+    });
+  });
+</script>
