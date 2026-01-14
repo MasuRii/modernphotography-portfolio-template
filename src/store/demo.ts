@@ -1,4 +1,5 @@
 import { atom, map } from 'nanostores';
+import demoConfig from '../config/demo-config.json';
 
 export interface ModalState {
   isOpen: boolean;
@@ -6,8 +7,27 @@ export interface ModalState {
   message: string;
 }
 
-// Global demo mode state (default true, can be toggled)
-export const isDemoMode = atom<boolean>(true);
+// Determine initial state
+// 1. Check config (default true)
+// 2. Check URL param ?demo=false (override) if on client
+const getInitialDemoState = (): boolean => {
+  let isEnabled = demoConfig.enabled;
+
+  if (typeof window !== 'undefined') {
+    const params = new URLSearchParams(window.location.search);
+    const demoParam = params.get('demo');
+    if (demoParam === 'false') {
+      isEnabled = false;
+    } else if (demoParam === 'true') {
+      isEnabled = true;
+    }
+  }
+
+  return isEnabled;
+};
+
+// Global demo mode state
+export const isDemoMode = atom<boolean>(getInitialDemoState());
 
 // Modal state
 export const modalState = map<ModalState>({
