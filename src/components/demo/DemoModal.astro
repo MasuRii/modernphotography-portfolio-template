@@ -4,7 +4,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
 
 <div
   id="demo-modal-backdrop"
-  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300"
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm opacity-0 pointer-events-none invisible transition-opacity duration-300"
   aria-hidden="true"
 >
   <div
@@ -75,7 +75,7 @@ import { modalState, closeDemoModal } from '../../store/demo';
     descEl.textContent = message;
 
     // Show modal
-    backdrop.classList.remove('opacity-0', 'pointer-events-none');
+    backdrop.classList.remove('opacity-0', 'pointer-events-none', 'invisible');
     backdrop.classList.add('opacity-100', 'pointer-events-auto'); // Ensure visible
     backdrop.setAttribute('aria-hidden', 'false');
     
@@ -102,6 +102,13 @@ import { modalState, closeDemoModal } from '../../store/demo';
     // Scale animation
     modal.classList.remove('scale-100');
     modal.classList.add('scale-95');
+
+    // Wait for animation to finish
+    setTimeout(() => {
+      if (backdrop.classList.contains('opacity-0')) {
+        backdrop.classList.add('invisible');
+      }
+    }, 300);
 
     // Restore focus
     if (previousActiveElement) {

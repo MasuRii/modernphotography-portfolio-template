@@ -39,13 +39,13 @@ const budgets = [
 
         <div class="space-y-6">
           <div>
-            <h3 class="text-white font-medium mb-2">Email</h3>
+            <h2 class="text-white font-medium mb-2">Email</h2>
             <a href="mailto:hello@elenavashchenko.com" class="text-neutral-400 hover:text-white transition-colors">
               hello@elenavashchenko.com
             </a>
           </div>
           <div>
-            <h3 class="text-white font-medium mb-2">Studio</h3>
+            <h2 class="text-white font-medium mb-2">Studio</h2>
             <p class="text-neutral-400">
               Shibuya City, Tokyo<br>
               Japan 150-0002
@@ -224,7 +224,8 @@ const budgets = [
             status.classList.remove('hidden', 'text-red-500');
             status.classList.add('text-green-500');
           }
-        }
+        },
+        1500 // Increased delay for testing visibility
       );
 
       if (!handled) {
